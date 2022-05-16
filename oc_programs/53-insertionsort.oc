@@ -1,0 +1,80 @@
+// $Id: 53-insertionsort.oc,v 1.6 2021-12-08 10:14:36-08 - - $
+//
+// Use insertion sort to print argv in sorted order.
+//
+
+#include "oclib.h"
+
+int strcmp (string s1, string s2) {
+   int index = 0;
+   bool contin = true;
+   int s1c = 0;
+   int s2c = 0;
+   int cmp = 0;
+   while (contin) {
+      s1c = s1[index];
+      s2c = s2[index];
+      cmp = s1c - s2c;
+      if (cmp != 0) return cmp;
+      if (s1c == '\0') contin = false;
+      if (s2c == '\0') contin = false;
+      index = index + 1;
+   }
+   return 0;
+}
+
+void insertion_sort (int size, array<string> words) {
+   int sorted = 1;
+   int slot = 0;
+   string element = nullptr;
+   bool contin = false;
+   while (sorted < size) {
+      slot = sorted;
+      element = words[slot];
+      contin = true;
+      while (contin) {
+         if (slot == 0) {
+            contin = false;
+         }else if (strcmp (words[slot - 1], element) <= 0) {
+            contin = false;
+         }else {
+            words[slot] = words[slot - 1];
+            slot = slot - 1;
+         }
+      }
+      words[slot] = element;
+      sorted = sorted + 1;
+   }
+}
+
+
+void print_array (int size, array<string> words) {
+   int index = 0;
+   while (index < size) {
+      putstr (words[index]);
+      putchr ('\n');
+      index = index + 1;
+   }
+}
+
+int read_words (int size, array<string> words) {
+   int count = 0;
+   string word = nullptr;
+   while (true) {
+      if (count == size) return count;
+      word = getstr();
+      if (word == nullptr) return count;
+      words[count] = word;
+      count = count + 1;
+   }
+}
+
+int main() {
+   int count = 100;
+   array<string> words = alloc<array<string>>(count);
+   count = read_words (count, words);
+   insertion_sort (count, words);
+   print_array (count, words);
+   return 0;
+}
+

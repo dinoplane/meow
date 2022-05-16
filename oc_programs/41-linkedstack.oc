@@ -1,0 +1,54 @@
+// $Id: 41-linkedstack.oc,v 1.6 2021-12-08 13:59:23-08 - - $
+
+#include "oclib.h"
+
+struct node {
+   string data;
+   ptr<struct node> link;
+};
+
+struct stack {
+   ptr<struct node> top;
+};
+
+int empty (ptr<struct stack> stack) {
+   assert (stack != nullptr);
+   return stack->top == nullptr;
+}
+
+ptr<struct stack> new_stack() {
+   ptr<struct stack> stack = alloc<struct stack>();
+   stack->top = nullptr;
+   return stack;
+}
+
+void push (ptr<struct stack> stack, string str) {
+   ptr<struct node> tmp = alloc<struct node>();
+   assert (stack != nullptr);
+   tmp->data = str;
+   tmp->link = stack->top;
+   stack->top = tmp;
+}
+
+string pop (ptr<struct stack> stack) {
+   string tmp = stack->top->data;
+   assert (stack != nullptr);
+   assert (not empty (stack));
+   stack->top = stack->top->link;
+   return tmp;
+}
+
+int main (int argc, array<string> argv) {
+   int argi = 0;
+   ptr<struct stack> stack = new_stack();
+   while (argi < argc) {
+      push (stack, argv[argi]);
+      argi = argi + 1;
+   }
+   while (not empty (stack)) {
+      putstr (pop (stack));
+      putchr ('\n');
+   }
+   return 0;
+}
+

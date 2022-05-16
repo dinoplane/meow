@@ -1,0 +1,20 @@
+// $Id: 04-test4.oc,v 1.2 2021-12-08 10:14:36-08 - - $
+
+#include "oclib.h"
+
+struct foo {
+   int a;
+};
+
+int main() {
+   int a = 6;
+   ptr<struct foo> b = alloc<struct foo>();
+   b->a = 8;
+   a = a * b->a + 6;;
+   putint (a);
+   putchr (' ');
+   putint (b->a);
+   putchr ('\n');
+   return 0;
+}
+

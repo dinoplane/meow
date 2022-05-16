@@ -1,0 +1,51 @@
+// $Id: 40-arraystack.oc,v 1.3 2021-12-08 10:14:36-08 - - $
+
+#include "oclib.h"
+
+#define EMPTY (-1)
+
+struct stack {
+   array<string> data;
+   int size;
+   int top;
+};
+
+ptr<struct stack> new_stack (int size) {
+   ptr<struct stack> stack = alloc<struct stack>();
+   stack->data = alloc<array<string>> (size);
+   stack->size = size;
+   stack->top = EMPTY;
+   return stack;
+}
+
+void push (ptr<struct stack> stack, string str) {
+   assert (stack->top < stack->size - 1);
+   stack->top = stack->top + 1;
+   stack->data[stack->top] = str;
+}
+
+string pop (ptr<struct stack> stack) {
+   string tmp = stack->data[stack->top];
+   assert (stack->top != EMPTY);
+   stack->top = stack->top - 1;
+   return tmp;
+}
+
+int empty (ptr<struct stack> stack) {
+   return stack->top == EMPTY;
+}
+
+int main (int argc, array<string> argv) {
+   ptr<struct stack> stack = new_stack (100);
+   int argi = 0;
+   while (argi < argc) {
+      push (stack, argv[argi]);
+      argi = argi + 1;
+   }
+   while (not empty (stack)) {
+      putstr (pop (stack));
+      putchr ('\n');
+   }
+   return 0;
+}
+

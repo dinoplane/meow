@@ -1,0 +1,47 @@
+// $Id: 51-stringcat.oc,v 1.4 2021-12-08 10:14:36-08 - - $
+//
+// Allocate and concatenate strings.
+//
+
+#include "oclib.h"
+
+int strlen (string str) {
+   int len = 0;
+   while (str[len] != '\0') len = len + 1;
+   return len;
+}
+
+void strcat (string dest, string src) {
+   int pos = strlen (dest);
+   int srcix = 0;
+   while (src[srcix] != '\0') {
+      dest[pos] = src[srcix];
+      pos = pos + 1;
+      srcix = srcix + 1;
+   }
+   dest[pos] = '\0';
+}
+
+int main (int argc, array<string> argv) {
+   int length = 0;
+   int argi = 1;
+   while (argi < argc) {
+      length = length + strlen (argv[argi]) + 2;
+      argi = argi + 1;
+   }
+   putstr ("concat length = ");
+   putint (length);
+   putchr ('\n');
+   string concat = alloc<string> (length);
+   argi = 1;
+   putchr ('[');
+   while (argi < argc) {
+      strcat (concat, "(");
+      strcat (concat, argv[argi]);
+      strcat (concat, ")");
+      argi = argi + 1;
+   }
+   putstr (concat);
+   putstr ("]\n");
+   return 0;
+}

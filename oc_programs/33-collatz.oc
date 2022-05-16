@@ -1,0 +1,33 @@
+// $Id: 33-collatz.oc,v 1.5 2021-12-08 10:14:36-08 - - $
+
+//
+// Compute the number of iterations needed for the Collatz conjecture.
+//
+
+#include "oclib.h"
+
+int collatz (int n) {
+   int c = 0;
+   while (n != 1) {
+      c = c + 1;
+      if (n % 2 == 1) n = 3 * n + 1;
+                 else n = n / 2;
+   }
+   return c;
+}   
+
+void test (int n) {
+   int c = collatz (n);
+   putstr ("collatz(");
+   putint (n);
+   putstr (") = ");
+   putint (c);
+   putchr ('\n');
+}
+
+int main() {
+   test (3);
+   test (50);
+   return 0;
+}
+

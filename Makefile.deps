@@ -1,0 +1,9 @@
+# Makefile.deps created Sat Jan  8 11:14:53 PST 2022
+astree.o: astree.cpp astree.h auxlib.h lyutils.h cpp_pipe.h yyparse.h
+auxlib.o: auxlib.cpp auxlib.h
+cpp_pipe.o: cpp_pipe.cpp auxlib.h cpp_pipe.h
+debug.o: debug.cpp debug.h
+lyutils.o: lyutils.cpp auxlib.h lyutils.h astree.h cpp_pipe.h yyparse.h
+main.o: main.cpp astree.h auxlib.h debug.h lyutils.h cpp_pipe.h yyparse.h
+yylex.o: yylex.cpp lyutils.h astree.h auxlib.h cpp_pipe.h yyparse.h
+yyparse.o: yyparse.cpp lyutils.h astree.h auxlib.h cpp_pipe.h yyparse.h

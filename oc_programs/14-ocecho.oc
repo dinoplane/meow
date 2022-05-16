@@ -1,0 +1,15 @@
+// $Id: 14-ocecho.oc,v 1.2 2021-12-08 10:14:36-08 - - $
+
+#include "oclib.h"
+
+int main(int argc, array<string> argv) {
+   int argi = 1;
+   while (argi < argc) {
+      if (argi > 1) putchr (' ');
+      putstr (argv[argi]);
+      argi = argi + 1;
+   }
+   putstr ("\n");
+   return 0;
+}
+

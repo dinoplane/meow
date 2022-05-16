@@ -1,0 +1,14 @@
+// $Id: 03-test3.oc,v 1.2 2021-12-08 10:14:36-08 - - $
+
+#include "oclib.h"
+
+int main() {
+   int a = 3;
+   int b = 8;
+   int c = a + b;
+   a = b + c;
+   putint (a);
+   putchr ('\n');
+   return 0;
+}
+

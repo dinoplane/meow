@@ -1,0 +1,13 @@
+// Unterminated strings.
+// $Id: 96-unterminated.oc,v 1.1 2019-05-09 14:45:22-07 - - $
+
+int main() {
+   string t = "\*/";
+   string s = "abc;
+   char c = 'a;
+   s = "abcd\";
+   s = "abc|\
+   ;
+   int 23foobar;
+}
+

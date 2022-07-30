@@ -1,0 +1,11 @@
+#all files in folders
+
+.vscode/
+cse110a/
+testing/
+
+# folders in proj
+proj/.antlr/
+proj/antlr-runtime/
+proj/build/
+proj/cmake/

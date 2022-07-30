@@ -1,0 +1,41 @@
+Mechanics: Programmer should be able to simulate whatever they want. That is, as long as 
+            input is syntactically correct, we have a corresponding output. 
+            Int variables are milk plants
+            String variables are catgirls. 
+            
+            If either is used without being fed, they die. 
+
+            Int lifespan is based on lines traversed since creation.
+            String variables are based on how many you used.
+            (Feed a table to the interpreter containing all the variable names.)
+
+            Oh if you don't want lifespans, use rock(basically, golems). You can set it as default. 
+            rock int tree.
+            rock string miao;
+
+            We got if, pointers, while, 
+
+            pointers are books. (immortal btw)
+            echoing a pointer generates: I'm a book about a shrub/cat;
+            
+
+
+
+
+
+
+
+
+Gameplay:   Programmer should code, simulate, and repeat. Interesting stories happen at each execution. I'm
+            unsure on whether or not I should add the story. For now, we have the bare simulation. As all 
+            simulations, players are like god, distant from the world, until they realize the consequences of 
+            their actions. 
+
+Experience: Player should feel like they have ultimate control at first, but later feel less powerful knowing they
+            are not the supreme ruler of the universe. 
+
+            Player must trade control for power. 
+
+
+
+M.

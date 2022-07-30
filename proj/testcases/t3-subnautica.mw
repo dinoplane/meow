@@ -1,0 +1,16 @@
+int main(){ // PLANET MAIN YIELDS INTS
+    int seaweed = 5;          # They have mouths. 
+    string peeper = "Jeff";  # ints are plants
+    feed(peeper);
+    if (seaweed == 12){
+        echo peeper
+    } else {
+        peeper = "12";
+    }
+
+    int titanium = (8)*(10);
+    int copper = titanium*(12); // I don't understand why you don't do this. 
+
+    echo(miao);              # death approaches (cat hunger 0)
+    return 0;
+}

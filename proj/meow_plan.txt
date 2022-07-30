@@ -1,0 +1,77 @@
+PLAN
+
+Player/programmer codes something up. Weird messages come out (while also the output comes out.)
+We are making a simulation. Integration with tracery and open/webgl is prospective.
+
+Create the world? The programmer is god?
+
+Hierarchy of order:
+Actual Execution
+3AC Interpretation
+Compilation
+Parsing/Lexing
+
+
+
+each variable is a catgirl. 
+
+catgirls need to be fed.
+
+if the catgirl gets too hungry, they go poof. 
+
+
+This is a cursed compiler. It should be usable, but also be cringe. 
+
+Example input:
+
+planet earth(){
+   int miao;
+   int meuw;
+   feed(miao, 1);
+   miao = miao + 1;
+   meuw = meuw + 1;
+}
+
+Corresp. std output:
+
+miao: "MOMMY! >w< me hungry!"
+meuw: "MOMMY! >w< me hungry!"
+miao: "OwO me worky! >w< me hungry!"
+meuw: "xwx me ded *POOF*"
+
+Corresp. 3AC (Plan is to directly generate RISCV):
+
+earth:
+   addi t1, t1, 1;
+
+
+Optimizations and questions to answer:
+
+Can I merge the AST into a DILF/MILF DOMSUB Tree?
+Can I typecheck while parsing?
+Can I keep track of scope?
+How do I frame the programmer as a "God/Creator"?
+How many JOJO references can I include?
+How cursed can this compiler get?
+How much can I gamify a compiler/toy programming language?
+How many optimizations can i make and have it also communicate artistically?
+Create a DOCS.
+AMOGUS
+
+
+
+Proposed Grammar:
+
+controlst
+
+
+
+STORY:
+
+4th wall breaking. 
+
+Demean the programmer.
+
+what are you coding?
+
+

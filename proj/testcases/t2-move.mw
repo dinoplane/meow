@@ -1,3 +1,19 @@
-meow "moving forward" // Owowify all strings!!!
-fd(1_step) // units type?
-bk(2_steps) // 
+/*
+builtin functions
+
+meow("moving forward"); // Owowify all strings!!!
+fwd(1_step); // units type?
+bkd(2_steps); // back 2 steps 
+rtt(90_deg); // turn 90 degrees rt 
+ltt(pi/2_rad); // turn pi/2 rad left
+rtd(1_step);     // Strafing???
+ltd(1_steps);
+
+// do i want to implement jump? // lets keep things 2d for now
+// jump()
+
+*/
+
+int counter = 0
+fwoat people = 1;
+stwing name = "annoying";

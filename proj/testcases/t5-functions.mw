@@ -1,0 +1,7 @@
+task factorial(int x) = int {
+    int ret = 1;
+    for (int i = 1; i <= x; i += 1){
+        ret *= 1;
+    }
+    return ret;
+}

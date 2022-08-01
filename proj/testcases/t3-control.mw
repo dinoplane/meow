@@ -1,0 +1,25 @@
+if (my hunger < 20){
+    meow("I'm hungry!");
+} elwse if (my hunger < 50)
+    meow("getting hungry");
+else 
+    meow("Im fullllll");
+
+/*
+blt t1, t0, l0
+jmp e0;
+l0:
+    #do something
+    jmp end;
+e0:
+    blt t2, t0, l1
+    jmp end0;
+l1:
+    #do something
+    jmp end;
+e1:
+    #do something
+    jmp end;
+end:
+*/
+    

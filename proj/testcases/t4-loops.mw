@@ -1,0 +1,14 @@
+int i = 0;
+while (i  < 10){
+    i += 1;
+}
+
+until (i == 0){
+    i -= 1;
+}
+
+for (int n = 0; n < 20; n+=1){
+    meow("NYA");
+}
+
+// do while and do until?

@@ -1,20 +1,35 @@
 grammar Meow;
 
-prog            :   prog func
+prog            :   prog stat
+                |   prog func
                 |
                 ;
 
-func            : '{' stat* '}'
+func            :   TOK_FUNCTION TOK_IDENT '(' param ')' TOK_EQ type block
+                ;
+
+param           :   '(' tid paramtail* ')'
+                ;
+
+paramtail       : ',' tid
+                ;
+
+block           : '{' stat* '}'
                 ;
 
 stat            :   decl
-                ;
+                
                 // |   assign
                 // |   print
-                // |   return 
-                // |   
+                // |   return
+                // |   forloop
+                |   ifelse
+                |   whileloop
+                // |   untilloop
+                ;
 
 type            : TOK_INT
+                | TOK_VOID
                 ;           
 
 tid             : type TOK_IDENT;
@@ -22,8 +37,6 @@ tid             : type TOK_IDENT;
 decl            : tid ';'
                 | tid  '=' expr ';'
                 ;
-
-expr            : constant;
 
 
 
@@ -98,10 +111,10 @@ expr            : constant;
 //             ;
             
 
-// while       : TOK_WHILE '(' expr ')' statement  
-//             ;
+whileloop   : TOK_WHILE '(' expr ')' stat  
+            ;
 
-// ifelse      : TOK_IF '(' expr ')' statement TOK_ELSE statement    
+ifelse      : TOK_IF '(' expr ')' stat (TOK_ELSE stat);   
                           
 
 //             | TOK_IF '(' expr ')' statement %prec TOK_ELSE        
@@ -112,22 +125,32 @@ expr            : constant;
 //             | TOK_RETURN ';'        
 //             ;
 
-// expr        : expr '=' expr         
-//             | expr TOK_EQ expr      
-//             | expr TOK_NE expr      
-//             | expr TOK_LT expr      
-//             | expr TOK_LE expr      
-//             | expr TOK_GT expr      
-//             | expr TOK_GE expr      
-//             | expr '+' expr         
-//             | expr '-' expr         
-//             | expr '*' expr         
-//             | expr '/' expr         
-//             | expr '%' expr         
-//             | '+' expr %prec UNARY  
-//             | '-' expr %prec UNARY  
-//             | TOK_NOT expr %prec UNARY 
-                                    
+expr        : '(' expr ')'
+            | expr '^'<assoc=right> expr
+            | '+'<assoc=right> expr 
+            | '-'<assoc=right> expr 
+            | TOK_NOT<assoc=right> expr
+            | expr '*' expr         
+            | expr '/' expr         
+            | expr '%' expr  
+            | expr '=' expr   
+            | expr '+' expr         
+            | expr '-' expr        
+            | expr TOK_EQ expr      
+            | expr TOK_NE expr      
+            | expr TOK_LT expr      
+            | expr TOK_LE expr      
+            | expr TOK_GT expr      
+            | expr TOK_GE expr           
+            | constant
+            | variable
+            | call
+            ;
+
+variable    : TOK_IDENT;   
+
+call        : TOK_IDENT param
+            ;
 //             | alloc                 
 //             | call                  
 //             | variable              
@@ -179,7 +202,7 @@ TOK_ARRAY     :     'array';
 TOK_ARROW     :     '->';
 TOK_ALLOC     :     'alloc';
 TOK_PTR       :     'ptr';
-TOK_FUNCTION  :     'function';
+TOK_FUNCTION  :     'task';
 TOK_LT        :     '<';
 TOK_GT        :     '>';
 TOK_EQ        :     '==';

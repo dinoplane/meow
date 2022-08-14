@@ -5,7 +5,7 @@ WARNINGS  = -Wall -Wextra -Wpedantic -Wshadow -Wold-style-cast
 GPPOPTS   = -std=gnu++2a -g -O0 -fdiagnostics-color=never
 GPP       = g++ ${GPPOPTS} ${WARNINGS}
 
-MODULES   = util
+MODULES   = util astree
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 FLEXSRC   = scanner.l
@@ -39,6 +39,6 @@ ${PARSECPP} ${PARSEHDR} : ${BISONSRC}
 
 
 clean :
-	rm ${OBJECTS} ${ALLGENS} ${EXECBIN}
+	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens
 	
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+PROG=./oc
+
+for test in testcases/t*.mw
+do
+	$PROG $test
+done

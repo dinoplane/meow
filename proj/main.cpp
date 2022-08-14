@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <regex>
 #include "util.h"
 using namespace std;
 
@@ -13,7 +14,7 @@ struct options {
    int lex_debug {0};
    int parse_debug {0};
 //   string suppressed {""};
-   const char* filename {nullptr};
+   string filename;
    options (int argc, char** argv);
 };
 
@@ -30,7 +31,8 @@ options::options (int argc, char** argv) {
       }
    }
    //if (optind + 1 < argc) throw usage_error();
-   filename = optind == argc ? "-" : argv[optind];
+   regex ext("\\.mw");
+   filename = optind == argc ? "-" : regex_replace(argv[optind], ext, "");
 }
 
 int main (int argc, char** argv) {
@@ -43,6 +45,7 @@ int main (int argc, char** argv) {
       parse_util parser (opts.filename,
                   opts.parse_debug, opts.lex_debug);
       parser.parse(); 
+      parser.write_file();
       lexer.close_file();      
    }catch (exception &reason) {
       cerr << "" << endl;

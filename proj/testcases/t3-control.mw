@@ -1,6 +1,6 @@
-if (my hunger < 20){
+if (hunger < 20){
     meow("I'm hungry!");
-} elwse if (my hunger < 50)
+} else if (hunger < 50)
     meow("getting hungry");
 else 
     meow("Im fullllll");

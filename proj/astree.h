@@ -8,18 +8,14 @@
 #include <string>
 #include <initializer_list>
 
+#include "location.h"
+
 
 using namespace std;
 
 using astree_ptr = struct ASTNode*;
 
-enum NType {INT, FLOAT, STRING, OP, NILL};
 
-struct location {
-   size_t linenr = 0;
-   size_t offset = 0;
-};
-ostream& operator<< (ostream&, const location&);
 
 
 /* We use class because we ned functions. Yes the AST takes up more memory, but this allows for easier 3AC generation
@@ -44,7 +40,6 @@ ostream& operator<< (ostream&, const location&);
 
 class ASTNode {
     public:
-        NType n_type;
         int symbol;
         location loc;
         string lexinfo;
@@ -53,10 +48,10 @@ class ASTNode {
         string vr = "";
     
     public:
-        // static map<n_type, string> NODE_2_3AC {{
-            
+        //  static map<n_type, int[]> NODE_2_3AC {
+        //     {},
 
-        // }};
+        //  };
 
 
         ASTNode(int symbol_, const location& loc_, const string lexinfo_) : symbol(symbol_), loc(loc_), lexinfo(lexinfo_) {};
@@ -65,7 +60,9 @@ class ASTNode {
 
         astree_ptr adopt(astree_ptr);
         astree_ptr adopt(initializer_list<astree_ptr> args);
-        
+        astree_ptr adopt_as (int symbol_, astree_ptr child);
+        astree_ptr adopt_as (int symbol_, initializer_list<astree_ptr> args);
+        astree_ptr set_symbol(int symbol_);
 
         string three_addr_code() {return "";};
 
@@ -76,6 +73,8 @@ class ASTNode {
         static astree_ptr  mkopt(int symbol, initializer_list<astree_ptr> list);
         
         static void erase (astree_ptr&);
+        static void erase(initializer_list<astree_ptr> list);
+        
         void print_tree (ostream& out, int depth = 0);
 };
 

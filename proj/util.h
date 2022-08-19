@@ -4,16 +4,18 @@
 #include <iostream>
 #include <fstream>
 #include "astree.h"
+#include "location.h"
 // #include "cpp_pipe.h"
 
 #define YYSTYPE astree_ptr
 #include "yyparse.h"
 
 
+
 using namespace std;
 
 int yylex();
-int yylex_destroy();
+int yylex_destroy(void);
 
 extern FILE* yyin;
 extern char* yytext; 
@@ -40,18 +42,22 @@ class lex_util {
       void advance();
       void newline();
       int token (int symbol);
-      int badtoken(int symbol) {return symbol;}
+      void badchar(unsigned char c);
+      void lex_fatal_error (const char* msg);
+      ostream& lex_error();
 };
 extern lex_util lexer;
 
 class parse_util {
    private:
       string filename;
+      FILE * script;
       astree_ptr astree_root = ASTNode::make (TOK_ROOT, {}, "[ROOT]");
 
    public:
       parse_util (string fn, bool parse_debug, bool lex_debug);
-      ~parse_util() { delete astree_root; };
+      ~parse_util() { fclose(script); 
+      delete astree_root; };
       void parse();
       //astree_ptr root() { return astree_root; }
       void write_file();

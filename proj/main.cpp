@@ -5,10 +5,12 @@
 #include <string>
 #include <vector>
 #include <regex>
-#include "util.h"
-using namespace std;
 
 #include <unistd.h>
+#include "util.h"
+#include "auxlib.h"
+using namespace std;
+
 
 struct options {
    int lex_debug {0};
@@ -37,18 +39,21 @@ options::options (int argc, char** argv) {
 
 int main (int argc, char** argv) {
    int status  = 0;
-
+   //cout << __cplusplus <<endl;
    ios_base::sync_with_stdio (true);
-   try {
+   exec::name (argv[0]);
+  try {
       options opts (argc, argv);
       lexer.open_file(opts.filename);
       parse_util parser (opts.filename,
-                  opts.parse_debug, opts.lex_debug);
+                 opts.parse_debug, opts.lex_debug);
       parser.parse(); 
       parser.write_file();
-      lexer.close_file();      
-   }catch (exception &reason) {
-      cerr << "" << endl;
+
+      lexer.close_file();  
+   }
+   catch (std::exception &reason) {
+      cerr << reason.what() << endl;
       status  = 1;
    }   
    return status;

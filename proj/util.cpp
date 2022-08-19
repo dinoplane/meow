@@ -9,7 +9,10 @@
 #include <fstream>
 
 #include "util.h"
+#include "auxlib.h"
 #include "astree.h"
+#include "location.h"
+
 
 
 using namespace std;
@@ -49,9 +52,10 @@ int lex_util::token (int symbol) {
 //    if (yylval != nullptr)
 //       cout << get_parser_yytname(yylval->symbol) << endl;
    yylval = ASTNode::make (symbol, loc, yytext);
+   //cout << loc.to_string().c_str() << endl;
       
    // First 3 columns: file line:offset symbol
-   out_file << setw(3) << loc.linenr
+   out_file << setfill('0') << setw(3) << loc.linenr
             << "." << setfill('0') << setw(3) << loc.offset << "  "
             << setfill(' ') << setw(3) << symbol;
    
@@ -68,11 +72,29 @@ int lex_util::token (int symbol) {
    return symbol;
 }
 
+void lex_util::badchar(unsigned char bad){
+   ostringstream buffer;
+   if (isgraph (bad)) buffer << bad;
+                 else buffer << "\\" << setfill('0') << setw(3)
+                             << unsigned (bad);
+   lex_error() << ": invalid source character ("
+           << buffer.str() << ")" << endl;
+  // cerr << "Bad" << endl;// BadTokenError(loc, c);
+}
+
+void lex_util::lex_fatal_error (const char* message) {
+   throw ::fatal_error (message);
+}
+
+ostream& lex_util::lex_error() {
+   return exec::error() << loc << ": ";
+}
+
 parse_util::parse_util(string fn, bool parse_debug, bool lex_debug){
    yydebug = parse_debug;
    yy_flex_debug = lex_debug;
 
-   FILE * script;
+   
    script = fopen((fn+".mw").c_str(), "r");
    if (script == nullptr)
       cout << "error" << endl;
@@ -83,12 +105,16 @@ parse_util::parse_util(string fn, bool parse_debug, bool lex_debug){
    filename = fn + ".ast";
 }
 
+
+
 void parse_util::parse(){
-   yyparse(astree_root);
+yyparse (astree_root);
+
+   cout << "done" << endl;
 }
 
 void parse_util::write_file(){
-   ofstream ast_file(filename + ".ast");
+   ofstream ast_file(filename);
    astree_root->print_tree(ast_file, 0);
    ast_file.close();
 };

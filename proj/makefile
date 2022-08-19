@@ -2,10 +2,10 @@ DEPSFILE  = Makefile.deps
 NOINCLUDE = clean
 NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
 WARNINGS  = -Wall -Wextra -Wpedantic -Wshadow -Wold-style-cast
-GPPOPTS   = -std=gnu++2a -g -O0 -fdiagnostics-color=never
+GPPOPTS   = -std=c++2a -g -O0 -fdiagnostics-color=never
 GPP       = g++ ${GPPOPTS} ${WARNINGS}
 
-MODULES   = util astree
+MODULES   = location util astree auxlib attr
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 FLEXSRC   = scanner.l
@@ -15,8 +15,8 @@ LEXCPP    = yylex.cpp
 PARSECPP  = yyparse.cpp
 CGENS     = ${PARSECPP} ${LEXCPP} 
 ALLGENS   = ${PARSEHDR} ${CGENS}
-EXECBIN   = oc
-ALLCSRC   =  ${CGENS} ${CPPSRC}
+EXECBIN   = nyan
+ALLCSRC   = ${CGENS} ${CPPSRC}
 OBJECTS   = ${ALLCSRC:.cpp=.o}
 
 all : ${EXECBIN}
@@ -39,6 +39,6 @@ ${PARSECPP} ${PARSEHDR} : ${BISONSRC}
 
 
 clean :
-	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens
+	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens testcases/*.ast
 	
 

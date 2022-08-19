@@ -1,12 +1,10 @@
-
-int p ; 
-float a;
-
-p = 1 + 2;
-a = 3/2;
-a = 20.00;
-a = 25.23;
-a = .34;
-
-
-float b = p + a;
+int main(){
+    int p ; 
+    float a;
+    p = 1 + 2;
+    a = 3/2;
+    a = 20.00;
+    a = 25.23;
+    a = .34;
+    float b = p + a;
+}

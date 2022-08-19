@@ -1,4 +1,8 @@
-/* just like Unix wc */
+/* just like Unix wc
+{NOT_IDENT}       { return lexer.badtoken(TOK_IDENT); }
+{NOT_CHARCON}     { return lexer.badtoken(TOK_CHARCON); }
+{NOT_STRINGCON}   { return lexer.badtoken(TOK_STRINGCON); }
+ */
 
 
 %{
@@ -49,9 +53,15 @@ TOK_STRINGCON  (\"{STRINGCON}*\")
 MID_BADSTRCON  ({BAD_STRINGCON}*{BAD_ESCAPE}{BAD_STRINGCON}*)
 NOT_STRINGCON  (\"{BAD_STRINGCON}*|\"{MID_BADSTRCON}\"*)
 
+
 %%
-[ \t]+            { }
+
+
+[ \t\r]+            { }
 \n                { lexer.newline(); }
+"//".*            {  }
+"/*"[^\*]*"*/"    {  }
+
 
 "void"            { return lexer.token (TOK_VOID); }
 "int"             { return lexer.token (TOK_INT); }
@@ -63,6 +73,8 @@ NOT_STRINGCON  (\"{BAD_STRINGCON}*|\"{MID_BADSTRCON}\"*)
 "if"              { return lexer.token (TOK_IF); }
 "else"            { return lexer.token (TOK_ELSE); }
 "while"           { return lexer.token (TOK_WHILE); }
+"for"             { return lexer.token (TOK_FOR); }
+"until"           { return lexer.token (TOK_UNTIL); }
 "alloc"           { return lexer.token (TOK_ALLOC); }
 "return"          { return lexer.token (TOK_RETURN); }
 "nullptr"         { return lexer.token (TOK_NULLPTR); }
@@ -74,6 +86,10 @@ NOT_STRINGCON  (\"{BAD_STRINGCON}*|\"{MID_BADSTRCON}\"*)
 "/"               { return lexer.token ('/'); }
 "%"               { return lexer.token ('%'); }
 "="               { return lexer.token ('='); }
+"+="              { return lexer.token (TOK_ADDEQ); }
+"-="              { return lexer.token (TOK_SUBEQ); }
+"++"              { return lexer.token (TOK_INC); }
+"--"              { return lexer.token (TOK_DEC); }
 "<"               { return lexer.token (TOK_LT); }
 ">"               { return lexer.token (TOK_GT); }
 "=="              { return lexer.token (TOK_EQ); }
@@ -98,9 +114,6 @@ NOT_STRINGCON  (\"{BAD_STRINGCON}*|\"{MID_BADSTRCON}\"*)
 
 {TOK_IDENT}       { return lexer.token (TOK_IDENT); }
 
-{NOT_IDENT}       { return lexer.badtoken(TOK_IDENT); }
-{NOT_CHARCON}     { return lexer.badtoken(TOK_CHARCON); }
-{NOT_STRINGCON}   { return lexer.badtoken(TOK_STRINGCON); }
-.                 {  }
+.                 { lexer.badchar(*yytext); }
 
 %%

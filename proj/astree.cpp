@@ -11,7 +11,7 @@ using namespace std;
 
 ostream& operator<< (ostream& out, const ASTNode& tree) {
    out << get_parser_yytname (tree.symbol) << " \"" << 
-          tree.lexinfo << "\" (" << tree.loc << ")";
+          tree.lexinfo << "\" (" << tree.loc << " " << tree.syminfo  << ")";
    return out;
 }
 
@@ -39,7 +39,7 @@ astree_ptr ASTNode::adopt(initializer_list<astree_ptr> args){
     return this;
 }
 
-astree_ptr ASTNode::adopt_as (int symbol_, astree_ptr child) {
+astree_ptr ASTNode::adopt_as (int symbol_, astree_ptr& child) {
    return set_symbol(symbol_)->adopt(child);
 }
 
@@ -53,7 +53,22 @@ astree_ptr ASTNode::set_symbol(int symbol_){
    return this;
 }
 
+astree_ptr ASTNode::set_bits(attr attr_) {
+   syminfo.attrbits[attr_] = 1;
+   return this;
+}
 
+astree_ptr ASTNode::set_bits(initializer_list<attr> args){
+   for (auto at : args){
+      set_bits(at);
+   }
+   return this;
+}
+
+astree_ptr ASTNode::set_bits(astree_ptr& tree){
+   syminfo.attrbits = tree->syminfo.attrbits;
+   return this;
+}
 
 astree_ptr ASTNode::make (int symbol, const location& loc,
                          const string lexinfo) {

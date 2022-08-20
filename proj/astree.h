@@ -9,6 +9,8 @@
 #include <initializer_list>
 
 #include "location.h"
+#include "attr.h"
+
 
 
 using namespace std;
@@ -42,6 +44,7 @@ class ASTNode {
     public:
         int symbol;
         location loc;
+        attributes syminfo;
         string lexinfo;
         vector<astree_ptr> children;
         string value;
@@ -60,9 +63,13 @@ class ASTNode {
 
         astree_ptr adopt(astree_ptr);
         astree_ptr adopt(initializer_list<astree_ptr> args);
-        astree_ptr adopt_as (int symbol_, astree_ptr child);
+        astree_ptr adopt_as (int symbol_, astree_ptr& child);
         astree_ptr adopt_as (int symbol_, initializer_list<astree_ptr> args);
         astree_ptr set_symbol(int symbol_);
+        astree_ptr set_bits(attr attr_);
+        astree_ptr set_bits(initializer_list<attr> args);
+        astree_ptr set_bits(astree_ptr& tree);
+        
 
         string three_addr_code() {return "";};
 

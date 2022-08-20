@@ -6,6 +6,7 @@
 
 #include "util.h"
 #include "astree.h"
+#include "attr.h"
 
 
 %}
@@ -48,27 +49,27 @@ prog            : prog stat                  { $$ = $1->adopt({$2}); }
                 |                            { $$ = astree_root; }
                 ;
 
-stat            : decl                       { $$ = $1; } 
-                | assign                     { $$ = $1; } 
-                | block                      { $$ = $1; }
-                | callstmt                   { $$ = $1; }
-                | ifelse                     { $$ = $1; }
-                | whilelp                    { $$ = $1; }
-                | forlp                      { $$ = $1; }
-                | untillp                    { $$ = $1; }
-                | return                     { $$ = $1; }
+stat            : decl                       { $$ = $1->set_bits(attr::TYPE_ID); } 
+                | assign                     { $$ = $1->set_bits(attr::ASSIGN); } 
+                | block                      { $$ = $1->set_bits(attr::BLOCK); }
+                | callstmt                   { $$ = $1->set_bits(attr::VADDR); }
+                | ifelse                     { $$ = $1->set_bits(attr::IFELSE); }
+                | whilelp                    { $$ = $1->set_bits(attr::WHILE); }
+                | forlp                      { $$ = $1->set_bits(attr::FOR); }
+                | untillp                    { $$ = $1->set_bits(attr::UNTIL); }
+                | return                     { $$ = $1->set_bits(attr::RETURN); }
                 ;
 
 
-func            : typeid parameters block    { $$ = ASTNode::mkopt(TOK_FUNCTION, {$1, $2, $3}); }
+func            : typeid parameters block    { $$ = ASTNode::mkopt(TOK_FUNCTION, {$1, $2, $3})->set_bits($1)->set_bits(attr::FUNCTION); }
                 ;
 
 parameters      : paramhead ')'              { delete $2; $$ = $1; }
-                | '(' ')'                    { delete $2; $$ = $1->set_symbol(TOK_PARAM); }
+                | '(' ')'                    { delete $2; $$ = $1->set_symbol(TOK_PARAM)->set_bits(attr::PARAM); }
                 ;
 
 paramhead       : paramhead ',' typeid       { delete $2; $$ = $1->adopt($3); }
-                | '(' typeid                 { $$ = $1->adopt_as(TOK_PARAM, $2); }
+                | '(' typeid                 { $$ = $1->adopt_as(TOK_PARAM, $2)->set_bits(attr::PARAM); }
                 ;
 
 
@@ -81,18 +82,18 @@ blockhead       : blockhead stat             { $$ = $1->adopt($2); }
                 ;
 
 
-typeid          : type TOK_IDENT             { $$ = ASTNode::mkopt(TOK_TYPE_ID, {$1, $2});  }
+typeid          : type TOK_IDENT             { $$ = ASTNode::mkopt(TOK_TYPE_ID, {$1, $2})->set_bits($1);  }
                 ;
 
-type            : TOK_INT                    { $$ = $1; }  
-                | TOK_FLOAT                  { $$ = $1; }  
-                | TOK_STRING                 { $$ = $1; }  
+type            : TOK_INT                    { $$ = $1->set_bits(attr::INT); }  
+                | TOK_FLOAT                  { $$ = $1->set_bits(attr::FLOAT); }  
+                | TOK_STRING                 { $$ = $1->set_bits(attr::STRING); }  
                 ;     
 
 decl            : declhead ';'            { delete $2; $$ = $1; }
                 ;
 
-declhead        : typeid '=' expr         { delete $2; $$ = $1->adopt($3); }
+declhead        : typeid '=' expr         { delete $2; $$ = $1->adopt($3)->set_bits(attr::ASSIGN); }
                 | typeid                  { $$ = $1; }
                 ;
 
@@ -154,11 +155,21 @@ untillp     : TOK_UNTIL '(' expr ')' stat
 return      : TOK_RETURN expr ';'   { delete $3; $$ = $1-> adopt($2); }
             ;
 
-expr            : '(' expr ')'               {delete $1; delete $3; $$ = $2; }
-                | expr '^' expr              { $$ = $2->adopt({$1, $3}); }
-                | '+' expr %prec UNARY       { $$ = $1->adopt($2); }
+expr            : binop                      { $$ = $1->set_bits(attr::BINOP); }
+                | unop                       { $$ = $1->set_bits(attr::UNOP); } 
+                | call                       { $$ = $1->set_bits(attr::VADDR); }
+                | constant                   { $$ = $1->set_bits(attr::CONST); } 
+                | variable                   { $$ = $1->set_bits(attr::VARIABLE); } 
+                | '(' expr ')'               {delete $1; delete $3; $$ = $2; }
+                ;
+
+
+unop            : '+' expr %prec UNARY       { $$ = $1->adopt($2); }
                 | '-' expr %prec UNARY       { $$ = $1->adopt($2); }
                 | TOK_NOT expr %prec UNARY   { $$ = $1->adopt($2); }
+                ;
+
+binop           : expr '^' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '*' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '/' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '%' expr              { $$ = $2->adopt({$1, $3}); }
@@ -170,18 +181,15 @@ expr            : '(' expr ')'               {delete $1; delete $3; $$ = $2; }
                 | expr TOK_LE expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_GT expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_GE expr           { $$ = $2->adopt({$1, $3}); }
-                | call                       { $$ = $1; }
-                | constant                   { $$ = $1; } 
-                | variable                   { $$ = $1; } 
                 ;
                 
 
-constant        : TOK_INTCON                 { $$ = $1; } 
-                | TOK_STRINGCON              { $$ = $1; } 
-                | TOK_FLOATCON               { $$ = $1; } 
+constant        : TOK_INTCON                 { $$ = $1->set_bits(attr::INT); } 
+                | TOK_STRINGCON              { $$ = $1->set_bits(attr::STRING); } 
+                | TOK_FLOATCON               { $$ = $1->set_bits(attr::FLOAT); } 
                 ;
 
-variable        : TOK_IDENT                  { $$ = $1; } 
+variable        : TOK_IDENT                  { $$ = $1->set_bits(attr::VARIABLE); } 
                 ;
 %%
 

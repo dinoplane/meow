@@ -5,13 +5,14 @@
 #include <bitset>
 #include <iostream>
 
-#include "astree.h"
+#include "location.h"
 
 
 // Implement arrays later??? debate this later
 enum attr { VOID, INT, FLOAT, STRING, 
-             CONST, VARIABLE, ASSIGN, BINOP, UNOP, BLOCK, 
-             IFELSE, WHILE, UNTIL,
+             TYPE_ID, CONST, VARIABLE,
+            ASSIGN, BINOP, UNOP, BLOCK, 
+             IFELSE, WHILE, FOR, UNTIL,
              PARAM, FUNCTION, RETURN, 
              VREG, VADDR, BITSET_SIZE
             };
@@ -20,8 +21,9 @@ using attr_bitset = bitset<attr::BITSET_SIZE>;
 // remember bit 0 is void
 static const string ATTR_NAMES[attr::BITSET_SIZE] = 
                                     { "void", "int", "float", "string",
-                                      "const", "variable", "assign", "binop", "unop", "block", 
-                                      "ifelse", "while", "until", 
+                                      "typeid", "const", "variable",
+                                       "assign", "binop", "unop", "block", 
+                                      "ifelse", "while", "for", "until", 
                                       "param", "function", "return", 
                                       "vreg", "vaddr"
                                     };

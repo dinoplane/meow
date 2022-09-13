@@ -87,7 +87,12 @@ extern int yydebug;
     TOK_FUNCTION = 293,
     TOK_PARAM = 294,
     TOK_TYPE_ID = 295,
-    UNARY = 296
+    TOK_INT2FLOAT = 296,
+    TOK_FLOAT2INT = 297,
+    TOK_INT2STRING = 298,
+    TOK_FLOAT2STRING = 299,
+    TOK_MOMMY = 300,
+    UNARY = 301
   };
 #endif
 

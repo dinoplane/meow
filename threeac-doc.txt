@@ -1,0 +1,58 @@
+3ac looking similar to riscv
+
+opcode rd, rs1, rs2
+^ generally like that
+
+Functions look like:
+func param1 param2 param3...
+
+
+
+Now because I'm interpretting code, I don't need to worry too much 
+about multiplication, division , etc. I can just let C# handle things for now.
+
+
+something like
+
+int i = 0;
+while (i < 10){
+    if (i % 2){
+        rise();
+    }
+    i++;
+}
+
+woudl translate to something like:
+ofc i need to figure out where the basic blocks are etc. 
+I am doing this by hand right now (havent finished the code generation yet)
+
+Assumptions: conditionals are just checks if the value is == 1
+
+I think I seperated into basic blocks?
+this is just to make sure the interpretter works
+
+addi vr0 vr0 0          # int i = 0;
+loop:
+    bge vr0, 10, end    # branch if vr0 >= 10
+    
+modulo:
+    modi vr1 vr0 2      # compute modulo and store to vr1
+    bge vr1 0 inc       # branch to increment if vr1 is even
+
+odd:
+    rise                # the function call. so concise!
+
+inc:
+    addi vr0, vr0, 1    # increment... and then 
+    jmp loop            # loop back
+end:                    # program end
+
+
+...
+
+Some problems:
+    maybe i shouldn't make the user pay for using a program
+    cats can still be variables! I'd need to make my plugin return a data structure...
+
+
+

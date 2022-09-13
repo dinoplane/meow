@@ -59,7 +59,7 @@ class parse_util {
       ~parse_util() { fclose(script); 
       delete astree_root; };
       void parse();
-      //astree_ptr root() { return astree_root; }
+      astree_ptr root() { return astree_root; }
       void write_file();
 };
 

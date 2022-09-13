@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include "util.h"
 #include "auxlib.h"
+#include "symbol.h"
+
 using namespace std;
 
 
@@ -47,12 +49,15 @@ int main (int argc, char** argv) {
       lexer.open_file(opts.filename);
       parse_util parser (opts.filename,
                  opts.parse_debug, opts.lex_debug);
+      
       parser.parse(); 
+      
+      SymbolManager sym_util(opts.filename);
+      sym_util.traverse_tree(parser.root());
       parser.write_file();
-
       lexer.close_file();  
    }
-   catch (std::exception &reason) {
+   catch (std::exception &reason) { // Worry about exceptions later!
       cerr << reason.what() << endl;
       status  = 1;
    }   

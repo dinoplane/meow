@@ -4,7 +4,6 @@
 
 #include "attr.h"
 
-
 ostream& operator<< (ostream& out, const attributes& a) {
    out << "{" << a.block_nr << "}";
    //bool is_ident = false;

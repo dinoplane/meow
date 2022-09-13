@@ -1,0 +1,35 @@
+we got:
+
+// Variables and declarations:
+int counter = 0;
+float cost = 2.0;
+string name = "Dexter";
+
+// Conditionals:
+if (counter == 0){
+    cost = cost + 1;
+} else {
+    cost -= 1; // Different ways to modify self
+}
+
+// Loops: (while for now)
+while (counter < 10){
+    counter += 1;
+}
+
+// Functions (from the modules)
+
+// Universal Functions
+wait(3);    // Waits for some time
+meow(name); // Module prints msg.
+
+// Module-specific
+
+ProgPlatform: A solid platform
+    Assume: 
+        - we have a grid-based world
+        - platform is marked with a red and blue arrow. 
+    - rise(): rises 1 tiles
+    - fall(): falls 1 tiles 
+    - red(): travels 1 tiles in the red direction
+    - blue(): travels 1 tiles in the blue direction

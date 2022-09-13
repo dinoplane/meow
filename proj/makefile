@@ -5,7 +5,7 @@ WARNINGS  = -Wall -Wextra -Wpedantic -Wshadow -Wold-style-cast
 GPPOPTS   = -std=c++2a -g -O0 -fdiagnostics-color=never
 GPP       = g++ ${GPPOPTS} ${WARNINGS}
 
-MODULES   = location util astree auxlib attr
+MODULES   = location util astree auxlib attr symbol
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 FLEXSRC   = scanner.l
@@ -39,6 +39,6 @@ ${PARSECPP} ${PARSEHDR} : ${BISONSRC}
 
 
 clean :
-	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens testcases/*.ast
+	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens testcases/*.ast testcases/*.sym
 	
 

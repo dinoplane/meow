@@ -1,3 +1,4 @@
+int hunger = 21;
 if (hunger < 20){
     meow("I'm hungry!");
 } else if (hunger < 50)

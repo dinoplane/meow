@@ -10,6 +10,7 @@
 #include "location.h"
 #include "attr.h"
 #include "astree.h"
+#include "codegen.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ struct Symbol {
     size_t seq = 0;
     location loc;
     vector<Symbol *>* parameters;
+    string new_name;
     attributes syminfo;
     Symbol(astree_ptr tree) : symbol(tree->symbol), loc(tree->loc), syminfo(tree->syminfo) {};
 };
@@ -28,13 +30,30 @@ using symtbl_stack = vector<symbol_table*>;             // a stack-like object
 using symbol_entry = symbol_table::value_type;
 
 
+
+struct ErrorMsg {
+    location loc;
+    string error_msg;
+    ErrorMsg(location loc_, string error_msg_) : loc(loc_), error_msg(error_msg_) {};
+};
+ostream& operator<< (ostream&, const ErrorMsg&);
+
 class SymbolManager {
     symtbl_stack tblstack; // each symbol table represents a new scope
     vector<size_t> block_state; // stores the next block
     //vector<> collect all functions?/?
+    
+
+    CodeGenerator cdg;
+    NewNameGenerator nng;
+    VRegAllocator vrg;
+
 
     string filename;
     ofstream symfile;
+
+    bool error_state = false;
+    vector<ErrorMsg> error_list;
 
     public:
         SymbolManager(string);
@@ -49,35 +68,36 @@ class SymbolManager {
 
         bool has_sym(string);
         Symbol* lookup(string);
-        void push_sym(astree_ptr);
+        bool push_sym(astree_ptr);
         void clear_sym(Symbol*);
 
-        void traverse_tree(astree_ptr);
-        void dispatch(astree_ptr);
+        bool traverse_tree(astree_ptr);
+        bool dispatch(astree_ptr);
 
-        void check_typeid(astree_ptr);  // declarations
-        void check_assign(astree_ptr);
-        void check_block(astree_ptr);   // blocks
-        void check_function();
-        void check_param();
+        bool check_typeid(astree_ptr);  // declarations
+        bool check_assign(astree_ptr);
+        bool check_block(astree_ptr);   // blocks
+        bool check_call(astree_ptr);
+        bool check_param(astree_ptr);
 
-
-
-        void check_expr(astree_ptr);
-        void check_convert(astree_ptr, size_t);
-        void check_binop(astree_ptr);
-        void check_unop(astree_ptr);
-        void check_const(astree_ptr);
-        void check_var(astree_ptr);
-
+        bool check_expr(astree_ptr);
+        bool check_convert(astree_ptr, size_t);
+        bool check_binop(astree_ptr);
+        bool check_unop(astree_ptr);
+        bool check_const(astree_ptr);
+        bool check_var(astree_ptr);
         
-
-
         static void set_attr(astree_ptr, Symbol*);
         static void set_attr(astree_ptr, astree_ptr);
         static void type_inference(astree_ptr, astree_ptr);
         
         static void type_inference(astree_ptr);
+
+        void push_error(location&, string);
+        void dump_errors();
+
+        string dump_program() {return cdg.dump_program();};
+        
 };
 
 #endif

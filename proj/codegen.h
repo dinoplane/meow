@@ -5,9 +5,14 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "attr.h"
+#include "codegen.h"
 #include "astree.h"
+using namespace std;
+
+
 class NewNameGenerator{
     friend class SymbolManager;
     int name_counter {0};
@@ -32,10 +37,11 @@ class VRegAllocator {
 };
 
 class LabelGenerator {
-    friend class SymbolManager;
     int lbl_counter {0};
+    
+    public: 
 
-    string make_new_lbl(astree_ptr a){ // Unoptimized
+    string make_new_lbl(){ // Unoptimized
         string ret = "lbl" + to_string(lbl_counter) + ":";
         lbl_counter++;    
         return ret;    
@@ -70,18 +76,36 @@ static const string NODE_3AC[attr::BITSET_SIZE] =
                                 };
 
 class CodeGenerator{
-    
+    public: 
+      static  map<string, string> BINOP_TO_3AC;
+      static  map<string, string> UNOP_TO_3AC;
+      static  map<string, string> COMP_TO_3AC;
 
     
     // If we reach a constant, because our interpreter has 
     // constant support(because parsing strings is slower 
     // so having intermediate vregs is slower)
     vector<string> program; // each string is a line
+    LabelGenerator lbg;
 
     string dump_program() const;
 
-    void linearize_expr(astree_ptr a) const;
-    
+    void dispatch(astree_ptr);
+
+    void linearize_expr(astree_ptr);
+
+    void linearize_assign(astree_ptr);
+
+    string linearize_condition(astree_ptr);
+
+    void linearize_block(astree_ptr);
+
+    void linearize_while(astree_ptr);
+
+    void linearize_ifelse(astree_ptr);
+
+    void linearize_call(astree_ptr);
+
     // If we reach a operator, we must generate a new vregs
     // If we reach a assignment, we must also generate a new vreg
     // When we see a variable, maybe we can return the vreg associtated with it

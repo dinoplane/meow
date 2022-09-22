@@ -38,7 +38,7 @@ using astree_ptr = struct ASTNode*;
 //                                       "field", "param" };
 
 
-
+// Let us do an unoptimized numbering scheme first!
 
 class ASTNode {
     public:
@@ -47,19 +47,33 @@ class ASTNode {
         attributes syminfo;
         string lexinfo;
         vector<astree_ptr> children;
-        string value;
         string vr = "";
     
     public:
-        //  static map<n_type, int[]> NODE_2_3AC {
-        //     {},
-
-        //  };
-
 
         ASTNode(int symbol_, const location& loc_, const string lexinfo_) : symbol(symbol_), loc(loc_), lexinfo(lexinfo_) {};
         // delete the copy and move constructor later cuz we dont need it
         ~ASTNode();
+
+        bool is_leaf_node() {
+            return syminfo[attr::CONST] || syminfo[attr::VARIABLE];
+        }
+
+        bool is_binop_node() {
+            return syminfo[attr::BINOP];
+        }
+
+        bool is_unop_node() {
+            return syminfo[attr::UNOP];
+        }
+
+        bool is_comp_node(){
+            return syminfo[attr::COMP];
+        }
+
+        bool is_conv_node(){
+            return syminfo[attr::INT2FLOAT] || syminfo[attr::FLOAT2INT];
+        }
 
         astree_ptr adopt(astree_ptr);
         astree_ptr adopt(initializer_list<astree_ptr> args);
@@ -69,10 +83,6 @@ class ASTNode {
         astree_ptr set_bits(attr attr_);
         astree_ptr set_bits(initializer_list<attr> args);
         astree_ptr set_bits(astree_ptr& tree);
-        
-
-        string three_addr_code() {return "";};
-
 
         static astree_ptr  make(int symbol, const location& loc, const string lexinfo);
 

@@ -181,14 +181,16 @@ binop           : expr '^' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '%' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '+' expr              { $$ = $2->adopt({$1, $3}); }
                 | expr '-' expr              { $$ = $2->adopt({$1, $3}); }
-                | expr TOK_EQ expr           { $$ = $2->adopt({$1, $3}); }
+                | comp                       { $$ = $1->set_bits(attr::COMP); }
+                ;
+                
+comp            : expr TOK_EQ expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_NE expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_LT expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_LE expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_GT expr           { $$ = $2->adopt({$1, $3}); }
                 | expr TOK_GE expr           { $$ = $2->adopt({$1, $3}); }
                 ;
-                
 
 constant        : TOK_INTCON                 { $$ = $1->set_bits(attr::INT); } 
                 | TOK_STRINGCON              { $$ = $1->set_bits(attr::STRING); } 

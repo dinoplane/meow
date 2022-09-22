@@ -7,11 +7,20 @@ using namespace std;
 
 #include "astree.h"
 #include "util.h"
+#include "attr.h"
 
 
 ostream& operator<< (ostream& out, const ASTNode& tree) {
    out << get_parser_yytname (tree.symbol) << " \"" << 
-          tree.lexinfo << "\" (" << tree.loc << " " << tree.syminfo  << ")";
+          tree.lexinfo << "\" (" << tree.loc << " " << tree.syminfo ;
+
+   if (tree.syminfo.attrbits[attr::CONST] || 
+         tree.syminfo.attrbits[attr::VARIABLE] ||
+         tree.syminfo.attrbits[attr::ASSIGN] ||
+         tree.syminfo.attrbits[attr::BINOP] ||
+         tree.syminfo.attrbits[attr::UNOP])
+      out << " VR: "<< tree.vr ;
+   out << " )";
    return out;
 }
 

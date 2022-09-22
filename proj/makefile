@@ -5,7 +5,7 @@ WARNINGS  = -Wall -Wextra -Wpedantic -Wshadow -Wold-style-cast
 GPPOPTS   = -std=c++2a -g -O0 -fdiagnostics-color=never
 GPP       = g++ ${GPPOPTS} ${WARNINGS}
 
-MODULES   = location util astree auxlib attr symbol
+MODULES   = location util astree auxlib attr symbol codegen
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 FLEXSRC   = scanner.l

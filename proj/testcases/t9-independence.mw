@@ -1,16 +1,15 @@
-int main() {
-    int states = 13;
-    string declaration;
-    int year = 1770;
-    float anger = 0;
 
-    while (anger < 100){
-        string purr = "purr";
-        meow(purr);
-        year++;
-        anger += 100 / 6; 
-    }
+int states = 13;
+string declaration;
+int year = 1770;
+float anger = 0;
 
-    declaration = "We howd these twuths to be sewf-evident, that aww cats awe cweated equaw, that they awe endowed by theiw Meownwess with cewtain unyawienyabwe Wights, that among these awe Wife, Wibewty and the puwsuit of Fwish.";
-    meow(declaration);
+while (anger < 100){
+    string purr = "purr";
+    meow(purr);
+    year++;
+    anger += 100 / 6; 
 }
+
+declaration = "We howd these twuths to be sewf-evident, that aww cats awe cweated equaw, that they awe endowed by theiw Meownwess with cewtain unyawienyabwe Wights, that among these awe Wife, Wibewty and the puwsuit of Fwish.";
+meow(declaration);

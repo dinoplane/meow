@@ -12,7 +12,7 @@
 enum attr { VOID, INT, FLOAT, STRING, 
             INT2FLOAT, FLOAT2INT,
              TYPE_ID, CONST, VARIABLE,
-             ASSIGN, BINOP, UNOP, BLOCK, 
+             ASSIGN, BINOP, UNOP, COMP, BLOCK, 
              IFELSE, WHILE, FOR, UNTIL,
              PARAM, FUNCTION, RETURN, 
              VREG, VADDR, BITSET_SIZE
@@ -24,7 +24,8 @@ static const string ATTR_NAMES[attr::BITSET_SIZE] =
                                     { "void", "int", "float", "string", 
                                         "int2float", "float2int",
                                       "typeid", "const", "variable",
-                                       "assign", "binop", "unop", "block", 
+                                       "assign", "binop", "unop", "comp",
+                                       "block", 
                                       "ifelse", "while", "for", "until", 
                                       "param", "function", "return", 
                                       "vreg", "vaddr"

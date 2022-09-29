@@ -56,7 +56,7 @@ void SymbolManager::push_tbl(){
         block_state.back()++;
     block_state.push_back(0);    
     tblstack.push_back(new symbol_table());
-    cout << "After Push: " << get_state()  << endl;
+    //cout << "After Push: " << get_state()  << endl;
 }
 
 void SymbolManager::pop_tbl(){  
@@ -91,7 +91,7 @@ void SymbolManager::clear_tbl(){
         delete b->second;
         i++;
     }
-    cout << "DELETED: " << i << endl;
+    //cout << "DELETED: " << i << endl;
     tblstack.back()->clear();
 }
 
@@ -157,6 +157,8 @@ bool SymbolManager::dispatch(astree_ptr child){
         return check_typeid(child);
     } else if (child->syminfo[attr::ASSIGN]){
         return check_assign(child);
+    } else if (child->syminfo[attr::COMP] || child->syminfo[attr::BINOP] || child->syminfo[attr::UNOP]){
+        return check_binop(child);
     } else {
         return traverse_tree(child);
     }
@@ -184,7 +186,7 @@ bool SymbolManager::check_typeid(astree_ptr tree){
 
         tmp->children.clear();
         delete tmp;
-        cdg.linearize_assign(tree);
+        //cdg.linearize_assign(tree);
     }
     return ret;
 }
@@ -204,7 +206,7 @@ bool SymbolManager::check_assign(astree_ptr tree){
         if (ret){
             set_attr(tree, tree->children[0]); // assign will always have the type of the lhs
             ret &= check_convert(tree, 1);
-            cdg.linearize_assign(tree);
+            //cdg.linearize_assign(tree);
         }
     }
     return ret;
@@ -270,11 +272,11 @@ bool SymbolManager::check_binop(astree_ptr tree){ // maybe there is a need to co
     astree_ptr left = tree->children[0];
     astree_ptr right = tree->children[1];
     
-    cout << "Operation: " << tree->lexinfo << endl;
+    //cout << "Operation: " << tree->lexinfo << endl;
     ret &= check_expr(left);
-    cout << "return: " << ret << endl;
+    //cout << "return: " << ret << endl;
     ret &= check_expr(right);
-    cout << "return: " << ret << endl;
+    //cout << "return: " << ret << endl;
 
     if (ret){
         // Check types according to table // strings need to be checked first but do later
@@ -284,9 +286,7 @@ bool SymbolManager::check_binop(astree_ptr tree){ // maybe there is a need to co
             tree->set_bits(attr::INT); 
         } 
         ret &= check_convert(tree, 0); // Left child
-        cout << "return: " << ret << endl;
         ret &= check_convert(tree, 1); // Right child
-        cout << "return: " << ret << endl;
         vrg.make_new_vr(tree);
 
         if (tree->is_comp_node()){

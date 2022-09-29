@@ -2015,7 +2015,7 @@ yyreduce:
 
   case 5:
 #line 52 "parser.y"
-                                             { yyval = astree_root; }
+                                             { yyval = astree_root->set_bits(attr::ROOT); }
 #line 2020 "yyparse.cpp"
     break;
 
@@ -2039,7 +2039,7 @@ yyreduce:
 
   case 9:
 #line 58 "parser.y"
-                                             { yyval = yyvsp[0]->set_bits(attr::VADDR); }
+                                             { yyval = yyvsp[0]->set_bits(attr::VADDR)->set_bits(attr::CALL); }
 #line 2044 "yyparse.cpp"
     break;
 

@@ -5,6 +5,7 @@
 #define AUXLIB_H
 
 #include <string>
+
 using namespace std;
 
 //

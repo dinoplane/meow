@@ -1,0 +1,12 @@
+i2vr n0 0
+lbl0:
+bge n0 10 lbl1
+modi vr1 n0 2
+bne vr1 0 lbl3
+lbl2:
+rise
+lbl3:
+addi vr3 n0 1
+i2vr n0 vr3
+jmp lbl0
+lbl1:

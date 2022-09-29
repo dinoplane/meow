@@ -39,6 +39,6 @@ ${PARSECPP} ${PARSEHDR} : ${BISONSRC}
 
 
 clean :
-	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens testcases/*.ast testcases/*.sym
+	rm ${OBJECTS} ${ALLGENS} ${EXECBIN} testcases/*.tokens testcases/*.ast testcases/*.sym testcases/*.3ac
 	
 

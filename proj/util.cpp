@@ -108,8 +108,7 @@ parse_util::parse_util(string fn, bool parse_debug, bool lex_debug){
 
 
 void parse_util::parse(){
-yyparse (astree_root);
-
+   yyparse (astree_root);
    cout << "done" << endl;
 }
 

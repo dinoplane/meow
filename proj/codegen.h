@@ -42,7 +42,7 @@ class LabelGenerator {
     public: 
 
     string make_new_lbl(){ // Unoptimized
-        string ret = "lbl" + to_string(lbl_counter) + ":";
+        string ret = "lbl" + to_string(lbl_counter);
         lbl_counter++;    
         return ret;    
     };
@@ -87,8 +87,14 @@ class CodeGenerator{
     // so having intermediate vregs is slower)
     vector<string> program; // each string is a line
     LabelGenerator lbg;
+    string filename;
 
+    CodeGenerator(string fn){
+        filename = fn + ".3ac";
+    }
     string dump_program() const;
+
+    void write_file();
 
     void dispatch(astree_ptr);
 

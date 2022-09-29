@@ -8,14 +8,15 @@
 #include "location.h"
 
 
+
 // Implement arrays later??? debate this later
 enum attr { VOID, INT, FLOAT, STRING, 
             INT2FLOAT, FLOAT2INT,
              TYPE_ID, CONST, VARIABLE,
-             ASSIGN, BINOP, UNOP, COMP, BLOCK, 
+             ASSIGN, BINOP, UNOP, COMP, CALL, BLOCK, 
              IFELSE, WHILE, FOR, UNTIL,
              PARAM, FUNCTION, RETURN, 
-             VREG, VADDR, BITSET_SIZE
+             VREG, VADDR, ROOT, BITSET_SIZE
             };
 using attr_bitset = bitset<attr::BITSET_SIZE>;
 
@@ -25,14 +26,14 @@ static const string ATTR_NAMES[attr::BITSET_SIZE] =
                                         "int2float", "float2int",
                                       "typeid", "const", "variable",
                                        "assign", "binop", "unop", "comp",
-                                       "block", 
+                                       "call", "block", 
                                       "ifelse", "while", "for", "until", 
                                       "param", "function", "return", 
-                                      "vreg", "vaddr"
+                                      "vreg", "root", "vaddr"
                                     };
 
 
-static attr_bitset TYPE_SET(string("000000000000000001111"));   
+static attr_bitset TYPE_SET(string("00000000000000000000001111"));   
 struct attributes {
  
     attr_bitset attrbits;

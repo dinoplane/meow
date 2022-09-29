@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <fstream>
 #include <map>
 
 #include "attr.h"
@@ -47,7 +48,7 @@ string CodeGenerator::dump_program() const {
 }
 
 void CodeGenerator::dispatch(astree_ptr child){
-    if (child->syminfo[attr::BLOCK]){
+    if (child->syminfo[attr::BLOCK] || child->syminfo[attr::ROOT]){
         linearize_block(child);
     } else if (child->syminfo[attr::TYPE_ID] || child->syminfo[attr::ASSIGN]){
         linearize_assign(child);
@@ -55,6 +56,10 @@ void CodeGenerator::dispatch(astree_ptr child){
         linearize_while(child);
     } else if (child->syminfo[attr::IFELSE]){
         linearize_ifelse(child);
+    } else if (child->syminfo[attr::IFELSE]){
+        linearize_ifelse(child);
+    } else if (child->syminfo[attr::CALL]){
+        linearize_call(child);
     } else {
         cout << "GIGA SCREWED" << endl;   
     }
@@ -106,7 +111,7 @@ void CodeGenerator::linearize_assign(astree_ptr tree) {
 
     astree_ptr right = tree->children[tree->children.size() - 1]; // src or dest depending on # of operands
     
-    if (tree->children.size() == 2){
+    if (tree->syminfo[attr::TYPE_ID] && tree->children.size() == 2){
         program.push_back(to_vr + " " + right->vr + " " + "0" + constend); // def value
     } else {
         astree_ptr left = tree->children[tree->children.size() - 2]; // dest
@@ -172,14 +177,18 @@ void CodeGenerator::linearize_ifelse(astree_ptr tree){
 
 void CodeGenerator::linearize_call(astree_ptr tree){ // i need to figure out how to typecheck
     string fn_name = tree->children[0]->lexinfo;
-    astree_ptr param = tree->children[1];
+    auto b = tree->children.begin();
+    b++;
     string ret = fn_name;
-    for (auto b = param->children.begin(); b != param->children.end(); b++){
+    for (; b != tree->children.end(); b++){
         linearize_expr(*b);
-    }
-
-    for (auto b = param->children.begin(); b != param->children.end(); b++){
         ret += " " + (*b)->vr;
     }
     program.push_back(ret);
+}
+
+void CodeGenerator::write_file(){
+    ofstream gen_file(filename);
+    gen_file << dump_program();
+    gen_file.close();
 }

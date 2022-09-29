@@ -49,13 +49,13 @@
 prog            : prog stat                  { $$ = $1->adopt({$2}); }
                 | prog func                  { $$ = $1->adopt({$2}); }
                 | prog error                 { $$ = $1; }
-                |                            { $$ = astree_root; }
+                |                            { $$ = astree_root->set_bits(attr::ROOT); }
                 ;
 
 stat            : decl                       { $$ = $1->set_bits(attr::TYPE_ID); } 
                 | assign                     { $$ = $1->set_bits(attr::ASSIGN); } 
                 | block                      { $$ = $1; }
-                | callstmt                   { $$ = $1->set_bits(attr::VADDR); }
+                | callstmt                   { $$ = $1->set_bits(attr::VADDR)->set_bits(attr::CALL); }
                 | ifelse                     { $$ = $1->set_bits(attr::IFELSE); }
                 | whilelp                    { $$ = $1->set_bits(attr::WHILE); }
                 

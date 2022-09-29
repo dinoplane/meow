@@ -44,7 +44,6 @@ class SymbolManager {
     //vector<> collect all functions?/?
     
 
-    CodeGenerator cdg;
     NewNameGenerator nng;
     VRegAllocator vrg;
 
@@ -96,7 +95,7 @@ class SymbolManager {
         void push_error(location&, string);
         void dump_errors();
 
-        string dump_program() {return cdg.dump_program();};
+        //string dump_program() {return cdg.dump_program();};
         
 };
 

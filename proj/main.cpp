@@ -56,7 +56,10 @@ int main (int argc, char** argv) {
       if (!sym_util.traverse_tree(parser.root())){
          sym_util.dump_errors();
       } else {
-         cout << sym_util.dump_program();
+         CodeGenerator cdg(opts.filename);
+         cdg.dispatch(parser.root());
+    
+        cdg.write_file();
       }
       parser.write_file();
       lexer.close_file();  

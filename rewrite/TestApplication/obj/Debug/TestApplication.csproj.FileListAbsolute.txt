@@ -1,0 +1,14 @@
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\bin\Debug\TestApplication.exe.config
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\bin\Debug\TestApplication.exe
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\bin\Debug\TestApplication.pdb
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.csproj.AssemblyReference.cache
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.csproj.SuggestedBindingRedirects.cache
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.Form1.resources
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.Properties.Resources.resources
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.csproj.GenerateResource.cache
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.csproj.CoreCompileInputs.cache
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.exe
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.pdb
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\bin\Debug\Antlr4.Runtime.Standard.dll
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\bin\Debug\Antlr4.Runtime.Standard.xml
+C:\Users\dinop\Documents\UCSC\meow\rewrite\TestApplication\obj\Debug\TestApplication.csproj.CopyComplete

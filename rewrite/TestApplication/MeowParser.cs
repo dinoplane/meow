@@ -36,18 +36,40 @@ public partial class MeowParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, T__2=3, INT=4, WS=5;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, WS=13, TOK_VOID=14, TOK_INT=15, TOK_FLOAT=16, 
+		TOK_STRING=17, TOK_IF=18, TOK_ELSE=19, TOK_WHILE=20, TOK_FOR=21, TOK_RETURN=22, 
+		TOK_NOT=23, TOK_ADDEQ=24, TOK_SUBEQ=25, TOK_INC=26, TOK_DEC=27, TOK_LT=28, 
+		TOK_GT=29, TOK_EQ=30, TOK_NE=31, TOK_LE=32, TOK_GE=33, TOK_ARROW=34, TOK_INTCON=35, 
+		TOK_FLOATCON=36, TOK_STRINGCON=37, TOK_IDENT=38, BAD_CHAR=39;
 	public const int
-		RULE_init = 0, RULE_value = 1;
+		RULE_prog = 0, RULE_stat = 1, RULE_block = 2, RULE_typeid = 3, RULE_type = 4, 
+		RULE_decl = 5, RULE_declhead = 6, RULE_assign = 7, RULE_assignhead = 8, 
+		RULE_crement = 9, RULE_callstmt = 10, RULE_call = 11, RULE_condition = 12, 
+		RULE_ifelse = 13, RULE_whilelp = 14, RULE_forlp = 15, RULE_return = 16, 
+		RULE_expr = 17, RULE_comp = 18, RULE_factor = 19, RULE_term = 20, RULE_expo = 21, 
+		RULE_unop = 22, RULE_unit = 23, RULE_constant = 24, RULE_variable = 25;
 	public static readonly string[] ruleNames = {
-		"init", "value"
+		"prog", "stat", "block", "typeid", "type", "decl", "declhead", "assign", 
+		"assignhead", "crement", "callstmt", "call", "condition", "ifelse", "whilelp", 
+		"forlp", "return", "expr", "comp", "factor", "term", "expo", "unop", "unit", 
+		"constant", "variable"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'{'", "','", "'}'"
+		null, "'{'", "'}'", "';'", "'='", "'('", "','", "')'", "'+'", "'-'", "'*'", 
+		"'/'", "'^'", null, "'void'", "'int'", "'float'", "'string'", "'if'", 
+		"'else'", "'while'", "'for'", "'return'", "'not'", "'+='", "'-='", "'++'", 
+		"'--'", "'<'", "'>'", "'=='", "'!='", "'<='", "'>='", "'->'", null, null, 
+		"'\"IAMASTRING\"'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, "INT", "WS"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, "WS", "TOK_VOID", "TOK_INT", "TOK_FLOAT", "TOK_STRING", "TOK_IF", 
+		"TOK_ELSE", "TOK_WHILE", "TOK_FOR", "TOK_RETURN", "TOK_NOT", "TOK_ADDEQ", 
+		"TOK_SUBEQ", "TOK_INC", "TOK_DEC", "TOK_LT", "TOK_GT", "TOK_EQ", "TOK_NE", 
+		"TOK_LE", "TOK_GE", "TOK_ARROW", "TOK_INTCON", "TOK_FLOATCON", "TOK_STRINGCON", 
+		"TOK_IDENT", "BAD_CHAR"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -81,59 +103,341 @@ public partial class MeowParser : Parser {
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
-	public partial class InitContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ValueContext[] value() {
-			return GetRuleContexts<ValueContext>();
+	public partial class ProgContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext[] stat() {
+			return GetRuleContexts<StatContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ValueContext value(int i) {
-			return GetRuleContext<ValueContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext stat(int i) {
+			return GetRuleContext<StatContext>(i);
 		}
-		public InitContext(ParserRuleContext parent, int invokingState)
+		public ProgContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_init; } }
+		public override int RuleIndex { get { return RULE_prog; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IMeowListener typedListener = listener as IMeowListener;
-			if (typedListener != null) typedListener.EnterInit(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IMeowListener typedListener = listener as IMeowListener;
-			if (typedListener != null) typedListener.ExitInit(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProg(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public InitContext init() {
-		InitContext _localctx = new InitContext(Context, State);
-		EnterRule(_localctx, 0, RULE_init);
+	public ProgContext prog() {
+		ProgContext _localctx = new ProgContext(Context, State);
+		EnterRule(_localctx, 0, RULE_prog);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 4;
-			Match(T__0);
-			State = 5;
-			value();
-			State = 10;
+			State = 55;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==T__1) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 274883641346L) != 0) {
 				{
 				{
-				State = 6;
-				Match(T__1);
-				State = 7;
-				value();
+				State = 52;
+				stat();
 				}
 				}
-				State = 12;
+				State = 57;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 13;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class StatContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public DeclContext decl() {
+			return GetRuleContext<DeclContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public AssignContext assign() {
+			return GetRuleContext<AssignContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
+			return GetRuleContext<BlockContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public CallstmtContext callstmt() {
+			return GetRuleContext<CallstmtContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public IfelseContext ifelse() {
+			return GetRuleContext<IfelseContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public WhilelpContext whilelp() {
+			return GetRuleContext<WhilelpContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ReturnContext @return() {
+			return GetRuleContext<ReturnContext>(0);
+		}
+		public StatContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_stat; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitStat(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public StatContext stat() {
+		StatContext _localctx = new StatContext(Context, State);
+		EnterRule(_localctx, 2, RULE_stat);
+		try {
+			State = 65;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 58;
+				decl();
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 59;
+				assign();
+				}
+				break;
+			case 3:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 60;
+				block();
+				}
+				break;
+			case 4:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 61;
+				callstmt();
+				}
+				break;
+			case 5:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 62;
+				ifelse();
+				}
+				break;
+			case 6:
+				EnterOuterAlt(_localctx, 6);
+				{
+				State = 63;
+				whilelp();
+				}
+				break;
+			case 7:
+				EnterOuterAlt(_localctx, 7);
+				{
+				State = 64;
+				@return();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class BlockContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext[] stat() {
+			return GetRuleContexts<StatContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext stat(int i) {
+			return GetRuleContext<StatContext>(i);
+		}
+		public BlockContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_block; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBlock(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public BlockContext block() {
+		BlockContext _localctx = new BlockContext(Context, State);
+		EnterRule(_localctx, 4, RULE_block);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 67;
+			Match(T__0);
+			State = 71;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 274883641346L) != 0) {
+				{
+				{
+				State = 68;
+				stat();
+				}
+				}
+				State = 73;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			State = 74;
+			Match(T__1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class TypeidContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public TypeContext type() {
+			return GetRuleContext<TypeContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_IDENT() { return GetToken(MeowParser.TOK_IDENT, 0); }
+		public TypeidContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_typeid; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTypeid(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public TypeidContext typeid() {
+		TypeidContext _localctx = new TypeidContext(Context, State);
+		EnterRule(_localctx, 6, RULE_typeid);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 76;
+			type();
+			State = 77;
+			Match(TOK_IDENT);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class TypeContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_INT() { return GetToken(MeowParser.TOK_INT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_FLOAT() { return GetToken(MeowParser.TOK_FLOAT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_STRING() { return GetToken(MeowParser.TOK_STRING, 0); }
+		public TypeContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_type; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitType(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public TypeContext type() {
+		TypeContext _localctx = new TypeContext(Context, State);
+		EnterRule(_localctx, 8, RULE_type);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 79;
+			_la = TokenStream.LA(1);
+			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 229376L) != 0) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class DeclContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public DeclheadContext declhead() {
+			return GetRuleContext<DeclheadContext>(0);
+		}
+		public DeclContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_decl; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDecl(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public DeclContext decl() {
+		DeclContext _localctx = new DeclContext(Context, State);
+		EnterRule(_localctx, 10, RULE_decl);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 81;
+			declhead();
+			State = 82;
 			Match(T__2);
 			}
 		}
@@ -148,48 +452,1056 @@ public partial class MeowParser : Parser {
 		return _localctx;
 	}
 
-	public partial class ValueContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public InitContext init() {
-			return GetRuleContext<InitContext>(0);
+	public partial class DeclheadContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public TypeidContext typeid() {
+			return GetRuleContext<TypeidContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INT() { return GetToken(MeowParser.INT, 0); }
-		public ValueContext(ParserRuleContext parent, int invokingState)
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public DeclheadContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_value; } }
+		public override int RuleIndex { get { return RULE_declhead; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IMeowListener typedListener = listener as IMeowListener;
-			if (typedListener != null) typedListener.EnterValue(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IMeowListener typedListener = listener as IMeowListener;
-			if (typedListener != null) typedListener.ExitValue(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDeclhead(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public ValueContext value() {
-		ValueContext _localctx = new ValueContext(Context, State);
-		EnterRule(_localctx, 2, RULE_value);
+	public DeclheadContext declhead() {
+		DeclheadContext _localctx = new DeclheadContext(Context, State);
+		EnterRule(_localctx, 12, RULE_declhead);
 		try {
-			State = 17;
+			State = 89;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__0:
+			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 15;
-				init();
+				State = 84;
+				typeid();
+				State = 85;
+				Match(T__3);
+				State = 86;
+				expr();
 				}
 				break;
-			case INT:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 16;
-				Match(INT);
+				State = 88;
+				typeid();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class AssignContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public AssignheadContext assignhead() {
+			return GetRuleContext<AssignheadContext>(0);
+		}
+		public AssignContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_assign; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssign(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public AssignContext assign() {
+		AssignContext _localctx = new AssignContext(Context, State);
+		EnterRule(_localctx, 14, RULE_assign);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 91;
+			assignhead();
+			State = 92;
+			Match(T__2);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class AssignheadContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public VariableContext variable() {
+			return GetRuleContext<VariableContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public CrementContext crement() {
+			return GetRuleContext<CrementContext>(0);
+		}
+		public AssignheadContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_assignhead; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignhead(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public AssignheadContext assignhead() {
+		AssignheadContext _localctx = new AssignheadContext(Context, State);
+		EnterRule(_localctx, 16, RULE_assignhead);
+		try {
+			State = 99;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 94;
+				variable();
+				State = 95;
+				Match(T__3);
+				State = 96;
+				expr();
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 98;
+				crement();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class CrementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public VariableContext variable() {
+			return GetRuleContext<VariableContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_ADDEQ() { return GetToken(MeowParser.TOK_ADDEQ, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_SUBEQ() { return GetToken(MeowParser.TOK_SUBEQ, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_INC() { return GetToken(MeowParser.TOK_INC, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_DEC() { return GetToken(MeowParser.TOK_DEC, 0); }
+		public CrementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_crement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCrement(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public CrementContext crement() {
+		CrementContext _localctx = new CrementContext(Context, State);
+		EnterRule(_localctx, 18, RULE_crement);
+		try {
+			State = 115;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 101;
+				variable();
+				State = 102;
+				Match(TOK_ADDEQ);
+				State = 103;
+				expr();
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 105;
+				variable();
+				State = 106;
+				Match(TOK_SUBEQ);
+				State = 107;
+				expr();
+				}
+				break;
+			case 3:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 109;
+				variable();
+				State = 110;
+				Match(TOK_INC);
+				}
+				break;
+			case 4:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 112;
+				variable();
+				State = 113;
+				Match(TOK_DEC);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class CallstmtContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public CallContext call() {
+			return GetRuleContext<CallContext>(0);
+		}
+		public CallstmtContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_callstmt; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCallstmt(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public CallstmtContext callstmt() {
+		CallstmtContext _localctx = new CallstmtContext(Context, State);
+		EnterRule(_localctx, 20, RULE_callstmt);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 117;
+			call();
+			State = 118;
+			Match(T__2);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class CallContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_IDENT() { return GetToken(MeowParser.TOK_IDENT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext[] expr() {
+			return GetRuleContexts<ExprContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr(int i) {
+			return GetRuleContext<ExprContext>(i);
+		}
+		public CallContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_call; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCall(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public CallContext call() {
+		CallContext _localctx = new CallContext(Context, State);
+		EnterRule(_localctx, 22, RULE_call);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 120;
+			Match(TOK_IDENT);
+			State = 121;
+			Match(T__4);
+			State = 123;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 515404464928L) != 0) {
+				{
+				State = 122;
+				expr();
+				}
+			}
+
+			State = 129;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__5) {
+				{
+				{
+				State = 125;
+				Match(T__5);
+				State = 126;
+				expr();
+				}
+				}
+				State = 131;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			State = 132;
+			Match(T__6);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ConditionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public ConditionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_condition; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCondition(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ConditionContext condition() {
+		ConditionContext _localctx = new ConditionContext(Context, State);
+		EnterRule(_localctx, 24, RULE_condition);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 134;
+			Match(T__4);
+			State = 135;
+			expr();
+			State = 136;
+			Match(T__6);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class IfelseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_IF() { return GetToken(MeowParser.TOK_IF, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext[] stat() {
+			return GetRuleContexts<StatContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext stat(int i) {
+			return GetRuleContext<StatContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_ELSE() { return GetToken(MeowParser.TOK_ELSE, 0); }
+		public IfelseContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_ifelse; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIfelse(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public IfelseContext ifelse() {
+		IfelseContext _localctx = new IfelseContext(Context, State);
+		EnterRule(_localctx, 26, RULE_ifelse);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 138;
+			Match(TOK_IF);
+			State = 139;
+			condition();
+			State = 140;
+			stat();
+			State = 143;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,8,Context) ) {
+			case 1:
+				{
+				State = 141;
+				Match(TOK_ELSE);
+				State = 142;
+				stat();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class WhilelpContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_WHILE() { return GetToken(MeowParser.TOK_WHILE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext stat() {
+			return GetRuleContext<StatContext>(0);
+		}
+		public WhilelpContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_whilelp; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWhilelp(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public WhilelpContext whilelp() {
+		WhilelpContext _localctx = new WhilelpContext(Context, State);
+		EnterRule(_localctx, 28, RULE_whilelp);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 145;
+			Match(TOK_WHILE);
+			State = 146;
+			condition();
+			State = 147;
+			stat();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ForlpContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_FOR() { return GetToken(MeowParser.TOK_FOR, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public DeclheadContext declhead() {
+			return GetRuleContext<DeclheadContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public AssignheadContext assignhead() {
+			return GetRuleContext<AssignheadContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatContext stat() {
+			return GetRuleContext<StatContext>(0);
+		}
+		public ForlpContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_forlp; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitForlp(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ForlpContext forlp() {
+		ForlpContext _localctx = new ForlpContext(Context, State);
+		EnterRule(_localctx, 30, RULE_forlp);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 149;
+			Match(TOK_FOR);
+			State = 150;
+			Match(T__4);
+			State = 151;
+			declhead();
+			State = 152;
+			Match(T__2);
+			State = 153;
+			expr();
+			State = 154;
+			Match(T__2);
+			State = 155;
+			assignhead();
+			State = 156;
+			Match(T__6);
+			State = 157;
+			stat();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ReturnContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_RETURN() { return GetToken(MeowParser.TOK_RETURN, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public ReturnContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_return; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitReturn(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ReturnContext @return() {
+		ReturnContext _localctx = new ReturnContext(Context, State);
+		EnterRule(_localctx, 32, RULE_return);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 159;
+			Match(TOK_RETURN);
+			State = 161;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 515404464928L) != 0) {
+				{
+				State = 160;
+				expr();
+				}
+			}
+
+			State = 163;
+			Match(T__2);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ExprContext : ParserRuleContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public CompContext[] comp() {
+			return GetRuleContexts<CompContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public CompContext comp(int i) {
+			return GetRuleContext<CompContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_EQ() { return GetTokens(MeowParser.TOK_EQ); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_EQ(int i) {
+			return GetToken(MeowParser.TOK_EQ, i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_NE() { return GetTokens(MeowParser.TOK_NE); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_NE(int i) {
+			return GetToken(MeowParser.TOK_NE, i);
+		}
+		public ExprContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expr; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpr(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExprContext expr() {
+		ExprContext _localctx = new ExprContext(Context, State);
+		EnterRule(_localctx, 34, RULE_expr);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 165;
+			comp();
+			State = 170;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==TOK_EQ || _la==TOK_NE) {
+				{
+				{
+				State = 166;
+				_localctx.op = TokenStream.LT(1);
+				_la = TokenStream.LA(1);
+				if ( !(_la==TOK_EQ || _la==TOK_NE) ) {
+					_localctx.op = ErrorHandler.RecoverInline(this);
+				}
+				else {
+					ErrorHandler.ReportMatch(this);
+				    Consume();
+				}
+				State = 167;
+				comp();
+				}
+				}
+				State = 172;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class CompContext : ParserRuleContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public FactorContext[] factor() {
+			return GetRuleContexts<FactorContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public FactorContext factor(int i) {
+			return GetRuleContext<FactorContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_LT() { return GetTokens(MeowParser.TOK_LT); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_LT(int i) {
+			return GetToken(MeowParser.TOK_LT, i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_GT() { return GetTokens(MeowParser.TOK_GT); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_GT(int i) {
+			return GetToken(MeowParser.TOK_GT, i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_LE() { return GetTokens(MeowParser.TOK_LE); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_LE(int i) {
+			return GetToken(MeowParser.TOK_LE, i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] TOK_GE() { return GetTokens(MeowParser.TOK_GE); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_GE(int i) {
+			return GetToken(MeowParser.TOK_GE, i);
+		}
+		public CompContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_comp; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitComp(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public CompContext comp() {
+		CompContext _localctx = new CompContext(Context, State);
+		EnterRule(_localctx, 36, RULE_comp);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 173;
+			factor();
+			State = 178;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 13690208256L) != 0) {
+				{
+				{
+				State = 174;
+				_localctx.op = TokenStream.LT(1);
+				_la = TokenStream.LA(1);
+				if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 13690208256L) != 0) ) {
+					_localctx.op = ErrorHandler.RecoverInline(this);
+				}
+				else {
+					ErrorHandler.ReportMatch(this);
+				    Consume();
+				}
+				State = 175;
+				factor();
+				}
+				}
+				State = 180;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class FactorContext : ParserRuleContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public TermContext[] term() {
+			return GetRuleContexts<TermContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public TermContext term(int i) {
+			return GetRuleContext<TermContext>(i);
+		}
+		public FactorContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_factor; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFactor(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public FactorContext factor() {
+		FactorContext _localctx = new FactorContext(Context, State);
+		EnterRule(_localctx, 38, RULE_factor);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 181;
+			term();
+			State = 186;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__7 || _la==T__8) {
+				{
+				{
+				State = 182;
+				_localctx.op = TokenStream.LT(1);
+				_la = TokenStream.LA(1);
+				if ( !(_la==T__7 || _la==T__8) ) {
+					_localctx.op = ErrorHandler.RecoverInline(this);
+				}
+				else {
+					ErrorHandler.ReportMatch(this);
+				    Consume();
+				}
+				State = 183;
+				term();
+				}
+				}
+				State = 188;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class TermContext : ParserRuleContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public ExpoContext[] expo() {
+			return GetRuleContexts<ExpoContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpoContext expo(int i) {
+			return GetRuleContext<ExpoContext>(i);
+		}
+		public TermContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_term; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTerm(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public TermContext term() {
+		TermContext _localctx = new TermContext(Context, State);
+		EnterRule(_localctx, 40, RULE_term);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 189;
+			expo();
+			State = 194;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__9 || _la==T__10) {
+				{
+				{
+				State = 190;
+				_localctx.op = TokenStream.LT(1);
+				_la = TokenStream.LA(1);
+				if ( !(_la==T__9 || _la==T__10) ) {
+					_localctx.op = ErrorHandler.RecoverInline(this);
+				}
+				else {
+					ErrorHandler.ReportMatch(this);
+				    Consume();
+				}
+				State = 191;
+				expo();
+				}
+				}
+				State = 196;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ExpoContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public UnopContext[] unop() {
+			return GetRuleContexts<UnopContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public UnopContext unop(int i) {
+			return GetRuleContext<UnopContext>(i);
+		}
+		public ExpoContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expo; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpo(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExpoContext expo() {
+		ExpoContext _localctx = new ExpoContext(Context, State);
+		EnterRule(_localctx, 42, RULE_expo);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 197;
+			unop();
+			State = 202;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__11) {
+				{
+				{
+				State = 198;
+				Match(T__11);
+				State = 199;
+				unop();
+				}
+				}
+				State = 204;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class UnopContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public UnitContext unit() {
+			return GetRuleContext<UnitContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_NOT() { return GetToken(MeowParser.TOK_NOT, 0); }
+		public UnopContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_unop; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitUnop(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public UnopContext unop() {
+		UnopContext _localctx = new UnopContext(Context, State);
+		EnterRule(_localctx, 44, RULE_unop);
+		try {
+			State = 212;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__7:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 205;
+				Match(T__7);
+				State = 206;
+				unit();
+				}
+				break;
+			case T__8:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 207;
+				Match(T__8);
+				State = 208;
+				unit();
+				}
+				break;
+			case TOK_NOT:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 209;
+				Match(TOK_NOT);
+				State = 210;
+				unit();
+				}
+				break;
+			case T__4:
+			case TOK_INTCON:
+			case TOK_FLOATCON:
+			case TOK_STRINGCON:
+			case TOK_IDENT:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 211;
+				unit();
 				}
 				break;
 			default:
@@ -207,13 +1519,234 @@ public partial class MeowParser : Parser {
 		return _localctx;
 	}
 
+	public partial class UnitContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ConstantContext constant() {
+			return GetRuleContext<ConstantContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public VariableContext variable() {
+			return GetRuleContext<VariableContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public UnitContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_unit; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitUnit(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public UnitContext unit() {
+		UnitContext _localctx = new UnitContext(Context, State);
+		EnterRule(_localctx, 46, RULE_unit);
+		try {
+			State = 220;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case TOK_INTCON:
+			case TOK_FLOATCON:
+			case TOK_STRINGCON:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 214;
+				constant();
+				}
+				break;
+			case TOK_IDENT:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 215;
+				variable();
+				}
+				break;
+			case T__4:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 216;
+				Match(T__4);
+				State = 217;
+				expr();
+				State = 218;
+				Match(T__6);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ConstantContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_INTCON() { return GetToken(MeowParser.TOK_INTCON, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_FLOATCON() { return GetToken(MeowParser.TOK_FLOATCON, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_STRINGCON() { return GetToken(MeowParser.TOK_STRINGCON, 0); }
+		public ConstantContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_constant; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConstant(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ConstantContext constant() {
+		ConstantContext _localctx = new ConstantContext(Context, State);
+		EnterRule(_localctx, 48, RULE_constant);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 222;
+			_la = TokenStream.LA(1);
+			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 240518168576L) != 0) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class VariableContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TOK_IDENT() { return GetToken(MeowParser.TOK_IDENT, 0); }
+		public VariableContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_variable; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMeowVisitor<TResult> typedVisitor = visitor as IMeowVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitVariable(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public VariableContext variable() {
+		VariableContext _localctx = new VariableContext(Context, State);
+		EnterRule(_localctx, 50, RULE_variable);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 224;
+			Match(TOK_IDENT);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	private static int[] _serializedATN = {
-		4,1,5,20,2,0,7,0,2,1,7,1,1,0,1,0,1,0,1,0,5,0,9,8,0,10,0,12,0,12,9,0,1,
-		0,1,0,1,1,1,1,3,1,18,8,1,1,1,0,0,2,0,2,0,0,19,0,4,1,0,0,0,2,17,1,0,0,0,
-		4,5,5,1,0,0,5,10,3,2,1,0,6,7,5,2,0,0,7,9,3,2,1,0,8,6,1,0,0,0,9,12,1,0,
-		0,0,10,8,1,0,0,0,10,11,1,0,0,0,11,13,1,0,0,0,12,10,1,0,0,0,13,14,5,3,0,
-		0,14,1,1,0,0,0,15,18,3,0,0,0,16,18,5,4,0,0,17,15,1,0,0,0,17,16,1,0,0,0,
-		18,3,1,0,0,0,2,10,17
+		4,1,39,227,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
+		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
+		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,1,0,5,0,54,8,0,10,0,12,0,57,9,
+		0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,66,8,1,1,2,1,2,5,2,70,8,2,10,2,12,2,
+		73,9,2,1,2,1,2,1,3,1,3,1,3,1,4,1,4,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,3,6,
+		90,8,6,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,3,8,100,8,8,1,9,1,9,1,9,1,9,1,9,
+		1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,3,9,116,8,9,1,10,1,10,1,10,1,11,1,
+		11,1,11,3,11,124,8,11,1,11,1,11,5,11,128,8,11,10,11,12,11,131,9,11,1,11,
+		1,11,1,12,1,12,1,12,1,12,1,13,1,13,1,13,1,13,1,13,3,13,144,8,13,1,14,1,
+		14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,16,1,
+		16,3,16,162,8,16,1,16,1,16,1,17,1,17,1,17,5,17,169,8,17,10,17,12,17,172,
+		9,17,1,18,1,18,1,18,5,18,177,8,18,10,18,12,18,180,9,18,1,19,1,19,1,19,
+		5,19,185,8,19,10,19,12,19,188,9,19,1,20,1,20,1,20,5,20,193,8,20,10,20,
+		12,20,196,9,20,1,21,1,21,1,21,5,21,201,8,21,10,21,12,21,204,9,21,1,22,
+		1,22,1,22,1,22,1,22,1,22,1,22,3,22,213,8,22,1,23,1,23,1,23,1,23,1,23,1,
+		23,3,23,221,8,23,1,24,1,24,1,25,1,25,1,25,0,0,26,0,2,4,6,8,10,12,14,16,
+		18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,0,6,1,0,15,17,1,0,30,
+		31,2,0,28,29,32,33,1,0,8,9,1,0,10,11,1,0,35,37,227,0,55,1,0,0,0,2,65,1,
+		0,0,0,4,67,1,0,0,0,6,76,1,0,0,0,8,79,1,0,0,0,10,81,1,0,0,0,12,89,1,0,0,
+		0,14,91,1,0,0,0,16,99,1,0,0,0,18,115,1,0,0,0,20,117,1,0,0,0,22,120,1,0,
+		0,0,24,134,1,0,0,0,26,138,1,0,0,0,28,145,1,0,0,0,30,149,1,0,0,0,32,159,
+		1,0,0,0,34,165,1,0,0,0,36,173,1,0,0,0,38,181,1,0,0,0,40,189,1,0,0,0,42,
+		197,1,0,0,0,44,212,1,0,0,0,46,220,1,0,0,0,48,222,1,0,0,0,50,224,1,0,0,
+		0,52,54,3,2,1,0,53,52,1,0,0,0,54,57,1,0,0,0,55,53,1,0,0,0,55,56,1,0,0,
+		0,56,1,1,0,0,0,57,55,1,0,0,0,58,66,3,10,5,0,59,66,3,14,7,0,60,66,3,4,2,
+		0,61,66,3,20,10,0,62,66,3,26,13,0,63,66,3,28,14,0,64,66,3,32,16,0,65,58,
+		1,0,0,0,65,59,1,0,0,0,65,60,1,0,0,0,65,61,1,0,0,0,65,62,1,0,0,0,65,63,
+		1,0,0,0,65,64,1,0,0,0,66,3,1,0,0,0,67,71,5,1,0,0,68,70,3,2,1,0,69,68,1,
+		0,0,0,70,73,1,0,0,0,71,69,1,0,0,0,71,72,1,0,0,0,72,74,1,0,0,0,73,71,1,
+		0,0,0,74,75,5,2,0,0,75,5,1,0,0,0,76,77,3,8,4,0,77,78,5,38,0,0,78,7,1,0,
+		0,0,79,80,7,0,0,0,80,9,1,0,0,0,81,82,3,12,6,0,82,83,5,3,0,0,83,11,1,0,
+		0,0,84,85,3,6,3,0,85,86,5,4,0,0,86,87,3,34,17,0,87,90,1,0,0,0,88,90,3,
+		6,3,0,89,84,1,0,0,0,89,88,1,0,0,0,90,13,1,0,0,0,91,92,3,16,8,0,92,93,5,
+		3,0,0,93,15,1,0,0,0,94,95,3,50,25,0,95,96,5,4,0,0,96,97,3,34,17,0,97,100,
+		1,0,0,0,98,100,3,18,9,0,99,94,1,0,0,0,99,98,1,0,0,0,100,17,1,0,0,0,101,
+		102,3,50,25,0,102,103,5,24,0,0,103,104,3,34,17,0,104,116,1,0,0,0,105,106,
+		3,50,25,0,106,107,5,25,0,0,107,108,3,34,17,0,108,116,1,0,0,0,109,110,3,
+		50,25,0,110,111,5,26,0,0,111,116,1,0,0,0,112,113,3,50,25,0,113,114,5,27,
+		0,0,114,116,1,0,0,0,115,101,1,0,0,0,115,105,1,0,0,0,115,109,1,0,0,0,115,
+		112,1,0,0,0,116,19,1,0,0,0,117,118,3,22,11,0,118,119,5,3,0,0,119,21,1,
+		0,0,0,120,121,5,38,0,0,121,123,5,5,0,0,122,124,3,34,17,0,123,122,1,0,0,
+		0,123,124,1,0,0,0,124,129,1,0,0,0,125,126,5,6,0,0,126,128,3,34,17,0,127,
+		125,1,0,0,0,128,131,1,0,0,0,129,127,1,0,0,0,129,130,1,0,0,0,130,132,1,
+		0,0,0,131,129,1,0,0,0,132,133,5,7,0,0,133,23,1,0,0,0,134,135,5,5,0,0,135,
+		136,3,34,17,0,136,137,5,7,0,0,137,25,1,0,0,0,138,139,5,18,0,0,139,140,
+		3,24,12,0,140,143,3,2,1,0,141,142,5,19,0,0,142,144,3,2,1,0,143,141,1,0,
+		0,0,143,144,1,0,0,0,144,27,1,0,0,0,145,146,5,20,0,0,146,147,3,24,12,0,
+		147,148,3,2,1,0,148,29,1,0,0,0,149,150,5,21,0,0,150,151,5,5,0,0,151,152,
+		3,12,6,0,152,153,5,3,0,0,153,154,3,34,17,0,154,155,5,3,0,0,155,156,3,16,
+		8,0,156,157,5,7,0,0,157,158,3,2,1,0,158,31,1,0,0,0,159,161,5,22,0,0,160,
+		162,3,34,17,0,161,160,1,0,0,0,161,162,1,0,0,0,162,163,1,0,0,0,163,164,
+		5,3,0,0,164,33,1,0,0,0,165,170,3,36,18,0,166,167,7,1,0,0,167,169,3,36,
+		18,0,168,166,1,0,0,0,169,172,1,0,0,0,170,168,1,0,0,0,170,171,1,0,0,0,171,
+		35,1,0,0,0,172,170,1,0,0,0,173,178,3,38,19,0,174,175,7,2,0,0,175,177,3,
+		38,19,0,176,174,1,0,0,0,177,180,1,0,0,0,178,176,1,0,0,0,178,179,1,0,0,
+		0,179,37,1,0,0,0,180,178,1,0,0,0,181,186,3,40,20,0,182,183,7,3,0,0,183,
+		185,3,40,20,0,184,182,1,0,0,0,185,188,1,0,0,0,186,184,1,0,0,0,186,187,
+		1,0,0,0,187,39,1,0,0,0,188,186,1,0,0,0,189,194,3,42,21,0,190,191,7,4,0,
+		0,191,193,3,42,21,0,192,190,1,0,0,0,193,196,1,0,0,0,194,192,1,0,0,0,194,
+		195,1,0,0,0,195,41,1,0,0,0,196,194,1,0,0,0,197,202,3,44,22,0,198,199,5,
+		12,0,0,199,201,3,44,22,0,200,198,1,0,0,0,201,204,1,0,0,0,202,200,1,0,0,
+		0,202,203,1,0,0,0,203,43,1,0,0,0,204,202,1,0,0,0,205,206,5,8,0,0,206,213,
+		3,46,23,0,207,208,5,9,0,0,208,213,3,46,23,0,209,210,5,23,0,0,210,213,3,
+		46,23,0,211,213,3,46,23,0,212,205,1,0,0,0,212,207,1,0,0,0,212,209,1,0,
+		0,0,212,211,1,0,0,0,213,45,1,0,0,0,214,221,3,48,24,0,215,221,3,50,25,0,
+		216,217,5,5,0,0,217,218,3,34,17,0,218,219,5,7,0,0,219,221,1,0,0,0,220,
+		214,1,0,0,0,220,215,1,0,0,0,220,216,1,0,0,0,221,47,1,0,0,0,222,223,7,5,
+		0,0,223,49,1,0,0,0,224,225,5,38,0,0,225,51,1,0,0,0,17,55,65,71,89,99,115,
+		123,129,143,161,170,178,186,194,202,212,220
 	};
 
 	public static readonly ATN _ATN =

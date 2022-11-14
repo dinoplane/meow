@@ -32,7 +32,7 @@ namespace attr
         public static readonly BitVector32 TYPE_SET = new BitVector32(15);
 
 
-        BitVector32 attrbits;
+        public BitVector32 attrbits;
         string block_nr;
         Location defloc;
 
@@ -43,13 +43,13 @@ namespace attr
             defloc = loc;
         }
 
-        public object this[int i]
+        public bool this[int i]
         {
             get { return attrbits[i]; }
             set { attrbits[i] = (bool) value; }
         }
 
-        public object this[Attr a]
+        public bool this[Attr a]
         {
             get { return attrbits[(int)a]; }
             set { attrbits[(int)a] = (bool) value; }
